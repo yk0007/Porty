@@ -596,15 +596,14 @@ const Portfolio = () => {
                 <span className="block sm:inline-block sm:text-7xl text-5xl sm:mr-5">
                   {cipherText.slice(0, 8).split('').map((char, idx) => {
                     const isDecrypted = decryptedFlags[idx];
-                    const isDarkMode = isClient ? document.documentElement.classList.contains('dark') : false;
                     
                     return (
                       <span
                         key={idx}
                         className={`transition-all duration-300 ${
                           isDecrypted 
-                            ? isDarkMode ? 'text-white' : 'text-black' 
-                            : isDarkMode ? 'text-gray-600' : 'text-gray-400'
+                            ? 'text-black dark:text-white' 
+                            : 'text-gray-400 dark:text-gray-600'
                         }`}
                         style={{
                           opacity: isDecrypted ? 1 : 0.5,
@@ -618,15 +617,14 @@ const Portfolio = () => {
                 <span className="block sm:inline-block sm:ml-2 sm:text-7xl text-5xl">
                   {cipherText.slice(8).split('').map((char, idx) => {
                     const isDecrypted = decryptedFlags[idx + 8];
-                    const isDarkMode = isClient ? document.documentElement.classList.contains('dark') : false;
                     
                     return (
                       <span
                         key={idx + 8}
                         className={`transition-all duration-300 ${
                           isDecrypted 
-                            ? isDarkMode ? 'text-white' : 'text-black' 
-                            : isDarkMode ? 'text-gray-600' : 'text-gray-400'
+                            ? 'text-black dark:text-white' 
+                            : 'text-gray-400 dark:text-gray-600'
                         }`}
                         style={{
                           opacity: isDecrypted ? 1 : 0.5,
