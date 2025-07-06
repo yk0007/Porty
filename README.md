@@ -1,88 +1,96 @@
-# Welcome to Porty!
+# Yaswanth Kuramdasu - Portfolio
 
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 [![TypeScript](https://img.shields.io/badge/TypeScript-007ACC?style=flat&logo=typescript&logoColor=white)](https://www.typescriptlang.org/)
 [![React](https://img.shields.io/badge/React-20232A?style=flat&logo=react&logoColor=61DAFB)](https://reactjs.org/)
 [![Vite](https://img.shields.io/badge/Vite-646CFF?style=flat&logo=vite&logoColor=white)](https://vitejs.dev/)
 
- This is a modern, responsive, and interactive portfolio built with React, TypeScript, and Vite. The website showcases my skills, projects, experience, and provides a way to get in touch with me.
+A modern, responsive, and interactive portfolio built with React, TypeScript, and Vite. This website showcases my skills, projects, and experience, with a built-in contact form for easy communication.
 
-## 🚀 Features
+## ✨ Features
 
-- **Modern UI/UX** with smooth animations and transitions
-- **Fully Responsive** design that works on all devices
-- **Dark/Light Mode** toggle for better user experience
-- **Interactive Elements** including contact form and project showcases
-- **Performance Optimized** for fast loading times
-- **Type-Safe** with TypeScript
+- 🎨 Modern UI/UX with smooth animations
+- 📱 Fully responsive design
+- 🌓 Dark/Light mode
+- 📝 Interactive project showcases
+- ⚡ Optimized performance
+- ✉️ Contact form with serverless backend
 
-## 🛠️ Technologies Used
+## 🛠 Tech Stack
 
 - **Frontend**: React 18, TypeScript
 - **Styling**: Tailwind CSS
-- **Build Tool**: Vite
+- **Build**: Vite
 - **Animation**: Framer Motion
-- **Icons**: React Icons (Font Awesome)
+- **Icons**: React Icons
 - **Form Handling**: React Hook Form
-- **UI Components**: Custom built with accessibility in mind
+- **Deployment**: Cloudflare Pages & Vercel
 
-## 🚀 Getting Started
+## 🚀 Quick Start
 
-### Prerequisites
-
-- Node.js (v16 or later)
-- npm or yarn
-
-### Installation
-
-1. Clone the repository
+1. **Clone the repository**
    ```bash
    git clone https://github.com/yk0007/Porty.git
    cd Porty
    ```
 
-2. Install dependencies
+2. **Install dependencies**
    ```bash
    npm install
    # or
    yarn
    ```
 
-3. Start the development server
+3. **Start development server**
    ```bash
    npm run dev
    # or
    yarn dev
    ```
 
-4. Open [http://localhost:5173](http://localhost:5173) to view it in your browser.
-
-## 📦 Building for Production
-
-To create a production build:
-
-```bash
-npm run build
-# or
-yarn build
-```
+4. Open [http://localhost:5173](http://localhost:5173) in your browser
 
 ## 🚀 Deployment
 
-This project is set up for easy deployment on Vercel. You can deploy your own copy using the Vercel button below:
+### Cloudflare Pages
+1. Push your code to a GitHub repository
+2. Go to [Cloudflare Pages](https://dash.cloudflare.com/)
+3. Connect your repository and configure:
+   - **Build command**: `npm run build` or `yarn build`
+   - **Build output directory**: `dist`
+   - **Root directory**: `/`
 
+### Vercel
 [![Deploy with Vercel](https://vercel.com/button)](https://vercel.com/new/clone?repository-url=https%3A%2F%2Fgithub.com%2Fyk0007%2FPorty)
+
+## 📦 Building for Production
+
+```bash
+# Install dependencies
+npm install
+
+# Build for production
+npm run build
+
+# Preview production build
+npm run preview
+```
+
+## 🤝 Contributing
+
+Contributions are welcome! Please follow these steps:
+1. Fork the repository
+2. Create a new branch
+3. Make your changes
+4. Submit a pull request
 
 ## 📝 License
 
 This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
 
-## 🤝 Contributing
+## 📬 Get in Touch
 
-Contributions are welcome! Feel free to open an issue or submit a pull request.
-
-## 📬 Contact
-
-- **Email**: [yaswanthkuramdasu@gmail.com](mailto:yaswanthkuramdasu@gmail.com)
-- **GitHub**: [@yk0007](https://github.com/yk0007)
-- **LinkedIn**: [Yaswanth Kuramdasu](https://linkedin.com/in/yourprofile)
+- 📧 Email: [yaswanthkuramdasu@gmail.com](mailto:yaswanthkuramdasu@gmail.com)
+- 💼 LinkedIn: [Yaswanth Kuramdasu](https://linkedin.com/in/yourprofile)
+- 💻 GitHub: [@yk0007](https://github.com/yk0007)
+- 🌐 Portfolio: [https://your-portfolio-url.com](https://your-portfolio-url.com)
