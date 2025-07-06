@@ -522,7 +522,7 @@ const Portfolio = () => {
               className="mb-8"
             >
               <motion.div
-                onClick={() => setResumeOpen(true)} // 🔥 add your onClick here
+                onClick={() => setResumeOpen(true)} // 
                 variants={{
                   hovered: {
                     scale: 1.05,
@@ -593,11 +593,13 @@ const Portfolio = () => {
                     <span
                       key={idx}
                       style={{
-                        color: decryptedFlags[idx]
-                          ? theme === 'light' ? '#000000' : '#ffffff'
-                          : theme === 'light' ? '#999999' : '#666666',
+                        color: !mounted 
+                          ? 'transparent' 
+                          : decryptedFlags[idx]
+                            ? theme === 'light' ? '#000000' : '#ffffff'
+                            : theme === 'light' ? '#999999' : '#666666',
                         opacity: decryptedFlags[idx] ? 1 : 0.5,
-                        transition: 'all 0.3s ease-in-out'
+                        transition: 'all 0.3s ease-in-out',
                       }}
                     >
                       {char}
@@ -609,11 +611,13 @@ const Portfolio = () => {
                     <span
                       key={idx + 8}
                       style={{
-                        color: decryptedFlags[idx + 8]
-                          ? theme === 'light' ? '#000000' : '#ffffff'
-                          : theme === 'light' ? '#999999' : '#666666',
+                        color: !mounted 
+                          ? 'transparent' 
+                          : decryptedFlags[idx + 8]
+                            ? theme === 'light' ? '#000000' : '#ffffff'
+                            : theme === 'light' ? '#999999' : '#666666',
                         opacity: decryptedFlags[idx + 8] ? 1 : 0.5,
-                        transition: 'all 0.3s ease-in-out'
+                        transition: 'all 0.3s ease-in-out',
                       }}
                     >
                       {char}
@@ -1131,7 +1135,7 @@ const Portfolio = () => {
             <div className="flex space-x-4 mt-4 md:mt-0">
             <Button size="sm" variant="ghost" asChild className="text-gray-600 hover:text-gray-900 hover:bg-gray-100 dark:text-white dark:hover:text-gray-200 dark:hover:bg-gray-800">
               <a href="#" target="_blank" rel="noopener noreferrer">
-                <FaGithub className="w-5 h-5" /> {/* Removed `text-black` */}
+                <FaGithub className="w-5 h-5" /> 
               </a>
             </Button>
               <Button size="sm" variant="ghost" asChild className="text-gray-600 hover:text-gray-900 hover:bg-gray-100 dark:text-gray-400 dark:hover:text-gray-200 dark:hover:bg-gray-800">
