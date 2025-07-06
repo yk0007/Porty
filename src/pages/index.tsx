@@ -211,6 +211,7 @@ const Portfolio = () => {
   const [startCipher, setStartCipher] = useState(false);
   const [resumeOpen, setResumeOpen] = useState(false);
   const hasAnimatedRef = useRef(false);
+  const [isClient, setIsClient] = useState(false);
 
   const { displayText: cipherText, decryptedFlags, isComplete } = useCipherTyping('Yaswanth Kuramdasu', startCipher);
   useEffect(() => {
@@ -224,6 +225,10 @@ const Portfolio = () => {
 
     window.addEventListener('scroll', handleScroll);
     return () => window.removeEventListener('scroll', handleScroll);
+  }, []);
+
+  useEffect(() => {
+    setIsClient(true);
   }, []);
 
   useEffect(() => {
@@ -589,40 +594,48 @@ const Portfolio = () => {
                 }}
               >
                 <span className="block sm:inline-block sm:text-7xl text-5xl sm:mr-5">
-                  {cipherText.slice(0, 8).split('').map((char, idx) => (
-                    <span
-                      key={idx}
-                      style={{
-                        color: !mounted 
-                          ? 'transparent' 
-                          : decryptedFlags[idx]
-                            ? theme === 'light' ? '#000000' : '#ffffff'
-                            : theme === 'light' ? '#999999' : '#666666',
-                        opacity: decryptedFlags[idx] ? 1 : 0.5,
-                        transition: 'all 0.3s ease-in-out',
-                      }}
-                    >
-                      {char}
-                    </span>
-                  ))}
+                  {cipherText.slice(0, 8).split('').map((char, idx) => {
+                    const isDecrypted = decryptedFlags[idx];
+                    const isDarkMode = isClient ? document.documentElement.classList.contains('dark') : false;
+                    
+                    return (
+                      <span
+                        key={idx}
+                        className={`transition-all duration-300 ${
+                          isDecrypted 
+                            ? isDarkMode ? 'text-white' : 'text-black' 
+                            : isDarkMode ? 'text-gray-600' : 'text-gray-400'
+                        }`}
+                        style={{
+                          opacity: isDecrypted ? 1 : 0.5,
+                        }}
+                      >
+                        {char}
+                      </span>
+                    );
+                  })}
                 </span>
                 <span className="block sm:inline-block sm:ml-2 sm:text-7xl text-5xl">
-                  {cipherText.slice(8).split('').map((char, idx) => (
-                    <span
-                      key={idx + 8}
-                      style={{
-                        color: !mounted 
-                          ? 'transparent' 
-                          : decryptedFlags[idx + 8]
-                            ? theme === 'light' ? '#000000' : '#ffffff'
-                            : theme === 'light' ? '#999999' : '#666666',
-                        opacity: decryptedFlags[idx + 8] ? 1 : 0.5,
-                        transition: 'all 0.3s ease-in-out',
-                      }}
-                    >
-                      {char}
-                    </span>
-                  ))}
+                  {cipherText.slice(8).split('').map((char, idx) => {
+                    const isDecrypted = decryptedFlags[idx + 8];
+                    const isDarkMode = isClient ? document.documentElement.classList.contains('dark') : false;
+                    
+                    return (
+                      <span
+                        key={idx + 8}
+                        className={`transition-all duration-300 ${
+                          isDecrypted 
+                            ? isDarkMode ? 'text-white' : 'text-black' 
+                            : isDarkMode ? 'text-gray-600' : 'text-gray-400'
+                        }`}
+                        style={{
+                          opacity: isDecrypted ? 1 : 0.5,
+                        }}
+                      >
+                        {char}
+                      </span>
+                    );
+                  })}
                 </span>
               </motion.div>
             </div>
