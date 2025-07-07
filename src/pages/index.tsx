@@ -132,7 +132,7 @@ const ResumeModal = ({
         >
           <motion.div
             onClick={(e) => e.stopPropagation()}
-            className="relative sm:w-full w-auto max-w-4xl sm:h-[80vh] h-60 rounded-2xl overflow-hidden shadow-2xl border border-white/20 bg-white/10 backdrop-blur-xl"
+            className="relative sm:w-full w-90% max-w-4xl sm:h-[80vh] h-auto rounded-2xl overflow-hidden shadow-2xl border border-white/20 bg-white/10 backdrop-blur-xl"
             initial={{ opacity: 0, scale: 0.85, transform: "translateZ(0)" }}
             animate={{ opacity: 1, scale: 1 }}
             exit={{ opacity: 0, scale: 0.85 }}
@@ -149,42 +149,82 @@ const ResumeModal = ({
               <FaTimes className="w-5 h-5" />
             </motion.button>
 
-            {/* PDF or fallback */}
-            {isMobile ? (
-              <div className="flex flex-col items-center justify-center h-full px-4 text-center space-y-4">
-                <p className="text-black text-lg">PDF cannot be displayed on this device.</p>
-                <a
-                  href="/Yaswanth Kuramdasu.pdf"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="text-blue-900 underline hover:text-blue-400 transition"
-                >
-                  Tap here to open in new tab
-                </a>
-              </div>
-            ) : (
-              <iframe
-                src="/Yaswanth Kuramdasu.pdf"
-                className="w-full h-full rounded-xl"
-                title="Resume PDF"
-              />
-            )}
-
-            {/* Download Button */}
-            <motion.div
-              className="absolute bottom-4 w-full flex justify-center z-10"
-              initial={{ opacity: 0, y: 10 }}
-              animate={{ opacity: 1, y: 0 }}
-              exit={{ opacity: 0, y: 10 }}
-              transition={{ duration: 0.4, ease: "easeInOut" }}
-            >
-              <motion.div
-                whileHover={{ scale: 1.05 }}
-                transition={{ type: "spring", stiffness: 250, damping: 18 }}
+            {/* Desktop: PDF Viewer with Download Button */}
+            <div className="hidden md:block w-full h-full rounded-xl overflow-hidden">
+              <object 
+                data="/Yaswanth Kuramdasu.pdf#toolbar=0&navpanes=0" 
+                type="application/pdf" 
+                width="100%" 
+                height="100%"
+                className="bg-gray-100 dark:bg-gray-800"
               >
+                <iframe 
+                  src="/Yaswanth Kuramdasu.pdf#toolbar=0&navpanes=0" 
+                  width="100%" 
+                  height="100%" 
+                  style={{ border: 'none' }}
+                  title="Resume PDF"
+                >
+                  This browser does not support PDFs. Please download the PDF to view it:
+                  <a 
+                    href="/Yaswanth Kuramdasu.pdf" 
+                    className="text-blue-600 hover:underline"
+                    target="_blank" 
+                    rel="noopener noreferrer"
+                  >
+                    Download PDF
+                  </a>
+                </iframe>
+              </object>
+              
+              {/* Desktop Download Button */}
+              <motion.div
+                className="absolute bottom-4 w-full flex justify-center z-10"
+                initial={{ opacity: 0, y: 10 }}
+                animate={{ opacity: 1, y: 0 }}
+                exit={{ opacity: 0, y: 10 }}
+                transition={{ duration: 0.4, ease: "easeInOut" }}
+              >
+                <motion.div
+                  whileHover={{ scale: 1.05 }}
+                  transition={{ type: "spring", stiffness: 250, damping: 18 }}
+                >
+                  <Button
+                    size="lg"
+                    className="flex items-center gap-2 px-6 py-2 text-sm font-medium bg-blue-500/80 hover:bg-blue-600/90 text-white backdrop-blur-md border border-blue-300/30 rounded-full shadow-lg transition duration-300"
+                    asChild
+                  >
+                    <a href="/Yaswanth Kuramdasu.pdf" download>
+                      <FaDownload className="w-4 h-4" />
+                      Download Resume
+                    </a>
+                  </Button>
+                </motion.div>
+              </motion.div>
+            </div>
+
+            {/* Mobile: Simple Buttons */}
+            <div className="md:hidden flex flex-col items-center justify-center h-full p-6 space-y-4">
+              <h3 className="text-xl font-semibold text-gray-800 dark:text-white mb-4">Resume</h3>
+              
+              {/* View Button */}
+              <motion.div className="w-full" whileHover={{ scale: 1.02 }} whileTap={{ scale: 0.98 }}>
                 <Button
                   size="lg"
-                  className="flex items-center gap-2 px-6 py-2 text-sm font-medium bg-blue-500/80 hover:bg-blue-600/90 text-white backdrop-blur-md border border-blue-300/30 rounded-full shadow-lg transition duration-300"
+                  className="w-full flex items-center justify-center gap-2 px-6 py-3 text-base font-medium bg-blue-500 hover:bg-blue-600 text-white rounded-xl shadow-lg transition duration-300"
+                  onClick={() => window.open('/Yaswanth Kuramdasu.pdf', '_blank')}
+                >
+                  <FaExternalLinkAlt className="w-4 h-4" />
+                  View in New Tab
+                </Button>
+              </motion.div>
+              
+              {/* Download Button */}
+              <motion.div className="w-full" whileHover={{ scale: 1.02 }} whileTap={{ scale: 0.98 }}>
+                <Button
+                  size="lg"
+                  variant="outline"
+                  className="w-full flex items-center justify-center gap-2 px-6 py-3 text-base font-medium text-blue-600 dark:text-blue-400 border-blue-300 dark:border-blue-600 hover:bg-blue-50 dark:hover:bg-blue-900/30 rounded-xl transition duration-300"
                   asChild
                 >
                   <a href="/Yaswanth Kuramdasu.pdf" download>
@@ -193,7 +233,7 @@ const ResumeModal = ({
                   </a>
                 </Button>
               </motion.div>
-            </motion.div>
+            </div>
           </motion.div>
         </motion.div>
       )}
@@ -206,6 +246,7 @@ const Portfolio = () => {
   const { theme, setTheme } = useTheme();
   const [mounted, setMounted] = useState(false);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+  const mobileMenuRef = useRef<HTMLDivElement>(null);
   const [scrollProgress, setScrollProgress] = useState(0);
   const [showGreeting, setShowGreeting] = useState('');
   const [startCipher, setStartCipher] = useState(false);
@@ -256,6 +297,35 @@ const Portfolio = () => {
     }
   }, [mounted]);
 
+  // Toggle mobile menu
+  const toggleMobileMenu = () => {
+    setMobileMenuOpen(prev => !prev);
+  };
+
+  // Close mobile menu when clicking outside or when resume modal opens
+  useEffect(() => {
+    const handleClickOutside = (event: MouseEvent) => {
+      if (mobileMenuOpen && mobileMenuRef.current && !mobileMenuRef.current.contains(event.target as Node)) {
+        setMobileMenuOpen(false);
+      }
+    };
+
+    if (mobileMenuOpen) {
+      document.addEventListener('mousedown', handleClickOutside);
+    }
+
+    return () => {
+      document.removeEventListener('mousedown', handleClickOutside);
+    };
+  }, [mobileMenuOpen]);
+
+  // Close mobile menu when resume modal opens
+  useEffect(() => {
+    if (resumeOpen) {
+      setMobileMenuOpen(false);
+    }
+  }, [resumeOpen]);
+
   const scrollToSection = (sectionId: string) => {
     const element = document.getElementById(sectionId);
     if (element) {
@@ -269,9 +339,9 @@ const Portfolio = () => {
   };
 
   const navItems = [
-    { id: 'home', label: 'Resume' },
-    { id: 'projects', label: 'Projects' },
-    { id: 'contact', label: 'Contact' }
+    { id: 'resume', label: 'Resume', action: () => setResumeOpen(true) },
+    { id: 'projects', label: 'Projects', action: (id: string) => scrollToSection(id) },
+    { id: 'contact', label: 'Contact', action: (id: string) => scrollToSection(id) }
   ];
 
   const projects = [
@@ -346,6 +416,50 @@ const Portfolio = () => {
     "Enjoys collaborating with diverse teams to ship innovative products"
   ];
 
+  const [formData, setFormData] = useState({
+    name: '',
+    email: '',
+    message: ''
+  });
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [submitStatus, setSubmitStatus] = useState<{success: boolean; message: string} | null>(null);
+
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    setIsSubmitting(true);
+    setSubmitStatus(null);
+
+    try {
+      // Your original form submission logic here
+      // For example:
+      // await yourApiCall(formData);
+      
+      // Simulate API call
+      await new Promise(resolve => setTimeout(resolve, 1000));
+      
+      setSubmitStatus({
+        success: true,
+        message: 'Message sent successfully! I\'ll get back to you soon.'
+      });
+      setFormData({ name: '', email: '', message: '' });
+    } catch (error) {
+      setSubmitStatus({
+        success: false,
+        message: 'Failed to send message. Please try again or contact me directly at yaswanthkuramdasu@gmail.com'
+      });
+    } finally {
+      setIsSubmitting(false);
+    }
+  };
+
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
+    const { name, value } = e.target;
+    setFormData(prev => ({
+      ...prev,
+      [name]: value
+    }));
+  };
+
   if (!mounted) return null;
 
   return (
@@ -360,10 +474,12 @@ const Portfolio = () => {
       {/* Scroll Progress Bar */}
       <motion.div
         className="fixed top-0 left-0 right-0 h-1 bg-gradient-to-r from-blue-500 to-blue-600 z-50"
-        style={{ scaleX: scrollProgress / 100 }}
+        style={{ 
+          scaleX: scrollProgress / 100,
+          transformOrigin: '0%'
+        }}
         initial={{ scaleX: 0 }}
         animate={{ scaleX: scrollProgress / 100 }}
-        transformOrigin="0%"
       />
 
       {/* Floating Navigation */}
@@ -393,7 +509,7 @@ const Portfolio = () => {
                   initial={{ opacity: 0, y: -10 }}
                   animate={{ opacity: 1, y: 0 }}
                   transition={{ delay: 0.4 + index * 0.1, ease: [0.25, 0.46, 0.45, 0.94] }}
-                  onClick={() => scrollToSection(item.id)}
+                  onClick={() => item.action(item.id)}
                   className="text-sm font-medium text-black dark:text-white hover:text-blue-600 dark:hover:text-blue-400 transition-colors"
                 >
                   {item.label}
@@ -472,7 +588,8 @@ const Portfolio = () => {
               </motion.button>
               
               <button
-                onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
+                onClick={toggleMobileMenu}
+                aria-label={mobileMenuOpen ? 'Close menu' : 'Open menu'}
                 className="p-2 rounded-full bg-white dark:bg-slate-800 hover:bg-blue-100 dark:hover:bg-blue-900 transition-colors"
               >
                 {mobileMenuOpen ? <FaTimes className="w-4 h-4 text-black dark:text-white" /> : <FaBars className="w-4 h-4 text-black dark:text-white" />}
@@ -484,6 +601,7 @@ const Portfolio = () => {
       <AnimatePresence>
         {mobileMenuOpen && (
           <motion.div
+            ref={mobileMenuRef}
             initial={{ opacity: 0, y: -10, scale: 0.95 }}
             animate={{ opacity: 1, y: 0, scale: 1 }}
             exit={{ opacity: 0, y: -10, scale: 0.95 }}
@@ -495,7 +613,7 @@ const Portfolio = () => {
                 <button
                   key={item.id}
                   onClick={() => {
-                    scrollToSection(item.id);
+                    item.action(item.id),
                     setMobileMenuOpen(false);
                   }}
                   className="block w-full text-left px-3 py-2 text-sm font-medium text-black dark:text-white hover:text-blue-600 dark:hover:text-blue-400 hover:bg-gray-100 dark:hover:bg-gray-700 rounded-lg transition-colors"
@@ -1094,38 +1212,64 @@ const Portfolio = () => {
                 <CardTitle className="text-gray-900 dark:text-white">Send a Message</CardTitle>
               </CardHeader>
               <CardContent className="space-y-4">
-                <div>
-                  <Label htmlFor="name" className="text-gray-700 dark:text-gray-300">Name</Label>
-                  <Input
-                    id="name"
-                    placeholder="Your name"
-                    className="bg-gray-50 border-gray-300 text-gray-900 placeholder:text-gray-500 dark:bg-gray-700 dark:border-gray-600 dark:text-white dark:placeholder:text-gray-400"
-                  />
-                </div>
+                <form onSubmit={handleSubmit} className="space-y-4">
+                  
+                  <div>
+                    <Label htmlFor="name" className="text-gray-700 dark:text-gray-300">Name</Label>
+                    <Input
+                      id="name"
+                      name="name"
+                      type="text"
+                      value={formData.name}
+                      onChange={handleChange}
+                      placeholder="Your name"
+                      className="bg-gray-50 border-gray-300 text-gray-900 placeholder:text-gray-500 dark:bg-gray-700 dark:border-gray-600 dark:text-white dark:placeholder:text-gray-400"
+                      required
+                    />
+                  </div>
 
-                <div>
-                  <Label htmlFor="email" className="text-gray-700 dark:text-gray-300">Email</Label>
-                  <Input
-                    id="email"
-                    type="email"
-                    placeholder="Your email"
-                    className="bg-gray-50 border-gray-300 text-gray-900 placeholder:text-gray-500 dark:bg-gray-700 dark:border-gray-600 dark:text-white dark:placeholder:text-gray-400"
-                  />
-                </div>
+                  <div>
+                    <Label htmlFor="email" className="text-gray-700 dark:text-gray-300">Email</Label>
+                    <Input
+                      id="email"
+                      name="email"
+                      type="email"
+                      value={formData.email}
+                      onChange={handleChange}
+                      placeholder="Your email"
+                      className="bg-gray-50 border-gray-300 text-gray-900 placeholder:text-gray-500 dark:bg-gray-700 dark:border-gray-600 dark:text-white dark:placeholder:text-gray-400"
+                      required
+                    />
+                  </div>
 
-                <div>
-                  <Label htmlFor="message" className="text-gray-700 dark:text-gray-300">Message</Label>
-                  <Textarea
-                    id="message"
-                    placeholder="Your message"
-                    rows={4}
-                    className="bg-gray-50 border-gray-300 text-gray-900 placeholder:text-gray-500 dark:bg-gray-700 dark:border-gray-600 dark:text-white dark:placeholder:text-gray-400"
-                  />
-                </div>
+                  <div>
+                    <Label htmlFor="message" className="text-gray-700 dark:text-gray-300">Message</Label>
+                    <Textarea
+                      id="message"
+                      name="message"
+                      value={formData.message}
+                      onChange={handleChange}
+                      placeholder="Your message"
+                      rows={4}
+                      className="bg-gray-50 border-gray-300 text-gray-900 placeholder:text-gray-500 dark:bg-gray-700 dark:border-gray-600 dark:text-white dark:placeholder:text-gray-400"
+                      required
+                    />
+                  </div>
 
-                <Button className="w-auto sm:w-full bg-black text-white hover:bg-blue-700 dark:bg-white dark:text-black dark:hover:bg-blue-400">
-                  Send Message
-                </Button>
+                  {submitStatus && (
+                    <div className={`p-3 rounded-md ${submitStatus.success ? 'bg-green-100 text-green-800 dark:bg-green-900 dark:text-green-200' : 'bg-red-100 text-red-800 dark:bg-red-900 dark:text-red-200'}`}>
+                      {submitStatus.message}
+                    </div>
+                  )}
+
+                  <Button 
+                    type="submit"
+                    className="w-auto sm:w-full bg-black text-white hover:bg-blue-700 dark:bg-white dark:text-black dark:hover:bg-blue-400"
+                    disabled={isSubmitting}
+                  >
+                    {isSubmitting ? 'Sending...' : 'Send Message'}
+                  </Button>
+                </form>
               </CardContent>
             </Card>
           </motion.div>
