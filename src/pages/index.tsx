@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useRef } from 'react';
-import { motion, AnimatePresence } from 'framer-motion';
+import { motion, AnimatePresence, AnimatePresenceProps } from 'framer-motion';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
@@ -430,18 +430,33 @@ const Portfolio = () => {
     setSubmitStatus(null);
 
     try {
-      // Your original form submission logic here
-      // For example:
-      // await yourApiCall(formData);
+      const response = await fetch('https://submit-form.com/74o79CPLK', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'Accept': 'application/json',
+        },
+        body: JSON.stringify({
+          name: formData.name,
+          email: formData.email,
+          message: formData.message,
+          '_feedback.success.title': 'Message Sent!',
+          '_feedback.success.message': 'Thank you for reaching out! I\'ll get back to you soon.'
+        })
+      });
       
-      // Simulate API call
-      await new Promise(resolve => setTimeout(resolve, 1000));
+      if (!response.ok) throw new Error('Failed to submit form');
       
       setSubmitStatus({
         success: true,
         message: 'Message sent successfully! I\'ll get back to you soon.'
       });
       setFormData({ name: '', email: '', message: '' });
+      
+      // Reset form after success
+      const form = e.target as HTMLFormElement;
+      form.reset();
+      
     } catch (error) {
       setSubmitStatus({
         success: false,
@@ -1212,10 +1227,19 @@ const Portfolio = () => {
                 <CardTitle className="text-gray-900 dark:text-white">Send a Message</CardTitle>
               </CardHeader>
               <CardContent className="space-y-4">
-                <form onSubmit={handleSubmit} className="space-y-4">
-                  
-                  <div>
-                    <Label htmlFor="name" className="text-gray-700 dark:text-gray-300">Name</Label>
+                <form 
+                  onSubmit={handleSubmit} 
+                  className="space-y-6"
+                  data-aos="fade-up"
+                  data-aos-duration="800"
+                  data-aos-delay="200"
+                >
+                  <motion.div 
+                    initial={{ opacity: 0, y: 20 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{ duration: 0.3 }}
+                  >
+                    <Label htmlFor="name" className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">Name</Label>
                     <Input
                       id="name"
                       name="name"
@@ -1223,52 +1247,111 @@ const Portfolio = () => {
                       value={formData.name}
                       onChange={handleChange}
                       placeholder="Your name"
-                      className="bg-gray-50 border-gray-300 text-gray-900 placeholder:text-gray-500 dark:bg-gray-700 dark:border-gray-600 dark:text-white dark:placeholder:text-gray-400"
+                      className="w-full px-4 py-3 bg-white dark:bg-gray-800 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all duration-200"
                       required
                     />
-                  </div>
+                  </motion.div>
 
-                  <div>
-                    <Label htmlFor="email" className="text-gray-700 dark:text-gray-300">Email</Label>
+                  <motion.div 
+                    initial={{ opacity: 0, y: 20 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{ duration: 0.3, delay: 0.1 }}
+                  >
+                    <Label htmlFor="email" className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">Email</Label>
                     <Input
                       id="email"
                       name="email"
                       type="email"
                       value={formData.email}
                       onChange={handleChange}
-                      placeholder="Your email"
-                      className="bg-gray-50 border-gray-300 text-gray-900 placeholder:text-gray-500 dark:bg-gray-700 dark:border-gray-600 dark:text-white dark:placeholder:text-gray-400"
+                      placeholder="your.email@example.com"
+                      className="w-full px-4 py-3 bg-white dark:bg-gray-800 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all duration-200"
                       required
                     />
-                  </div>
+                  </motion.div>
 
-                  <div>
-                    <Label htmlFor="message" className="text-gray-700 dark:text-gray-300">Message</Label>
+                  <motion.div 
+                    initial={{ opacity: 0, y: 20 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{ duration: 0.3, delay: 0.2 }}
+                  >
+                    <Label htmlFor="message" className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">Message</Label>
                     <Textarea
                       id="message"
                       name="message"
                       value={formData.message}
                       onChange={handleChange}
-                      placeholder="Your message"
-                      rows={4}
-                      className="bg-gray-50 border-gray-300 text-gray-900 placeholder:text-gray-500 dark:bg-gray-700 dark:border-gray-600 dark:text-white dark:placeholder:text-gray-400"
+                      placeholder="How can I help you?"
+                      rows={5}
+                      className="w-full px-4 py-3 bg-white dark:bg-gray-800 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all duration-200 resize-none"
                       required
                     />
-                  </div>
+                  </motion.div>
 
-                  {submitStatus && (
-                    <div className={`p-3 rounded-md ${submitStatus.success ? 'bg-green-100 text-green-800 dark:bg-green-900 dark:text-green-200' : 'bg-red-100 text-red-800 dark:bg-red-900 dark:text-red-200'}`}>
-                      {submitStatus.message}
-                    </div>
-                  )}
-
-                  <Button 
-                    type="submit"
-                    className="w-auto sm:w-full bg-black text-white hover:bg-blue-700 dark:bg-white dark:text-black dark:hover:bg-blue-400"
-                    disabled={isSubmitting}
+                  <motion.div
+                    initial={{ opacity: 0, y: 20 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{ duration: 0.3, delay: 0.3 }}
                   >
-                    {isSubmitting ? 'Sending...' : 'Send Message'}
-                  </Button>
+                    {submitStatus && (
+                      <motion.div 
+                        initial={{ opacity: 0, y: -10 }}
+                        animate={{ opacity: 1, y: 0 }}
+                        className={`p-4 rounded-lg ${
+                          submitStatus.success 
+                            ? 'bg-green-50 border border-green-200 text-green-800 dark:bg-green-900/30 dark:border-green-800 dark:text-green-200' 
+                            : 'bg-red-50 border border-red-200 text-red-800 dark:bg-red-900/30 dark:border-red-800 dark:text-red-200'
+                        }`}
+                      >
+                        <div className="flex items-center">
+                          {submitStatus.success ? (
+                            <svg className="w-5 h-5 mr-2 text-green-500 dark:text-green-400" fill="currentColor" viewBox="0 0 20 20">
+                              <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clipRule="evenodd" />
+                            </svg>
+                          ) : (
+                            <svg className="w-5 h-5 mr-2 text-red-500 dark:text-red-400" fill="currentColor" viewBox="0 0 20 20">
+                              <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zM8.707 7.293a1 1 0 00-1.414 1.414L8.586 10l-1.293 1.293a1 1 0 101.414 1.414L10 11.414l1.293 1.293a1 1 0 001.414-1.414L11.414 10l1.293-1.293a1 1 0 00-1.414-1.414L10 8.586 8.707 7.293z" clipRule="evenodd" />
+                            </svg>
+                          )}
+                          <span className="text-sm font-medium">{submitStatus.message}</span>
+                        </div>
+                      </motion.div>
+                    )}
+                  </motion.div>
+
+                  <motion.div
+                    initial={{ opacity: 0, y: 20 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{ duration: 0.3, delay: 0.4 }}
+                    className="pt-2"
+                  >
+                    <Button 
+                      type="submit"
+                      className={`w-full py-3 px-6 rounded-lg font-medium text-white transition-all duration-200 transform hover:scale-[1.02] focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 ${
+                        isSubmitting 
+                          ? 'bg-blue-400 dark:bg-blue-500' 
+                          : 'bg-gradient-to-r from-blue-600 to-blue-700 hover:from-blue-700 hover:to-blue-800 dark:from-blue-500 dark:to-blue-600 dark:hover:from-blue-600 dark:hover:to-blue-700'
+                      }`}
+                      disabled={isSubmitting}
+                    >
+                      {isSubmitting ? (
+                        <span className="flex items-center justify-center">
+                          <svg className="animate-spin -ml-1 mr-2 h-4 w-4 text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+                            <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
+                            <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+                          </svg>
+                          Sending...
+                        </span>
+                      ) : (
+                        <span className="flex items-center justify-center">
+                          <svg className="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
+                          </svg>
+                          Send Message
+                        </span>
+                      )}
+                    </Button>
+                  </motion.div>
                 </form>
               </CardContent>
             </Card>
