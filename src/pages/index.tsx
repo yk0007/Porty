@@ -683,7 +683,7 @@ const Portfolio = () => {
       </motion.div>
 
       {/* Hero Section */}
-      <section id="home" className="pt-32 lg:pt-24 min-h-screen flex items-center justify-center">
+      <section id="home" className="pt-10 lg:pt-20 min-h-screen flex items-center justify-center">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
           <motion.div
             initial={{ opacity: 0, y: 50 }}
