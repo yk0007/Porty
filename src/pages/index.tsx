@@ -31,6 +31,7 @@ import {
   FaWhatsapp
 } from 'react-icons/fa';
 import { useTheme } from 'next-themes';
+import AnimatedPrinter from '@/components/AnimatedPrinter';
 
 // Improved cipher typing animation hook
 const useCipherTyping = (targetText: string, shouldStart: boolean) => {
@@ -253,6 +254,46 @@ const Portfolio = () => {
   const [resumeOpen, setResumeOpen] = useState(false);
   const hasAnimatedRef = useRef(false);
   const [isClient, setIsClient] = useState(false);
+  const [logoColorIndex, setLogoColorIndex] = useState(0);
+  const [isSpinning, setIsSpinning] = useState(false);
+
+  // Dark colors for light theme, light colors for dark theme
+  const logoColors = [
+    'bg-blue-500 dark:bg-blue-600',
+    'dark:bg-purple-300 bg-purple-600', // Purple
+    'dark:bg-teal-300 bg-teal-600',    // Teal
+    'dark:bg-orange-300 bg-orange-600', // Orange
+    'dark:bg-gray-400 bg-gray-600',
+    'dark:bg-rose-300 bg-rose-600',    // Pink
+    'dark:bg-emerald-300 bg-emerald-600', // Green
+    'dark:bg-slate-100 bg-slate-500',  // Gray
+    'dark:bg-amber-300 bg-amber-600' // Yellow
+  ];
+  
+  // Lighter versions for dots
+  const dotColors = [
+    'bg-blue-700 dark:bg-blue-300',
+    'dark:bg-purple-100 bg-purple-700',
+    'dark:bg-teal-100 bg-teal-700',
+    'dark:bg-orange-100 bg-orange-700',
+    'dark:bg-gray-100 bg-gray-700',
+    'dark:bg-rose-100 bg-rose-700',
+    'dark:bg-emerald-100 bg-emerald-700',
+    'dark:bg-slate-50 bg-slate-500',
+    'dark:bg-amber-100 bg-amber-700'
+  ];
+  
+  // Text color that contrasts well with both themes
+  const textColor = 'text-white dark:text-gray-900';
+
+  const handleLogoClick = () => {
+    setIsSpinning(true);
+    setLogoColorIndex((prevIndex) => (prevIndex + 1) % logoColors.length);
+    
+    setTimeout(() => {
+      setIsSpinning(false);
+    }, 1000);
+  };
 
   const { displayText: cipherText, decryptedFlags, isComplete } = useCipherTyping('Yaswanth Kuramdasu', startCipher);
   useEffect(() => {
@@ -339,7 +380,7 @@ const Portfolio = () => {
   };
 
   const navItems = [
-    { id: 'resume', label: 'Resume', action: () => setResumeOpen(true) },
+    { id: 'resume', label: 'Resume', action: (id: string) => scrollToSection(id) },
     { id: 'projects', label: 'Projects', action: (id: string) => scrollToSection(id) },
     { id: 'contact', label: 'Contact', action: (id: string) => scrollToSection(id) }
   ];
@@ -378,32 +419,32 @@ const Portfolio = () => {
   const skillCategories = [
     {
       title: 'Languages',
-      icon: <FaCode className="w-5 h-5 text-blue-600 dark:text-blue-400" />,
+      icon: <FaCode className="w-5 h-5 text-red-500 dark:text-red-400 drop-shadow-sm" />,
       skills: ['Python', 'Go', 'C++', 'Java', 'JavaScript (ES6+)', 'TypeScript', 'HTML5', 'CSS3', 'SQL']
     },
     {
       title: 'AI/ML',
-      icon: <FaBrain className="w-5 h-5 text-blue-600 dark:text-blue-400" />,
+      icon: <FaBrain className="w-5 h-5 text-purple-500 dark:text-purple-400 drop-shadow-sm" />,
       skills: ['PyTorch', 'TensorFlow', 'Scikit-learn', 'Hugging Face', 'Transformers', 'PEFT', 'LLMs']
     },
     {
       title: 'Web & Mobile',
-      icon: <FaCode className="w-5 h-5 text-blue-600 dark:text-blue-400" />,
+      icon: <FaCode className="w-5 h-5 text-emerald-500 dark:text-emerald-400 drop-shadow-sm" />,
       skills: ['React', 'Node.js', 'Express', 'Vite', 'Next.js', 'Tailwind CSS', 'React Native', 'Framer']
     },
     {
       title: 'Databases & Platforms',
-      icon: <FaDatabase className="w-5 h-5 text-blue-600 dark:text-blue-400" />,
+      icon: <FaDatabase className="w-5 h-5 text-orange-500 dark:text-orange-400 drop-shadow-sm" />,
       skills: ['MongoDB', 'PostgreSQL','MySQL', 'Firebase', 'Supabase', 'WatermelonDB', 'Clerk']
     },
     {
       title: 'Developer Tools',
-      icon: <FaTools className="w-5 h-5 text-blue-600 dark:text-blue-400" />,
+      icon: <FaTools className="w-5 h-5 text-gray-500 dark:text-gray-400 drop-shadow-sm" />,
       skills: ['Git', 'GitHub', 'Docker', 'VS Code', 'Google Colab']
     },
     {
       title: 'Professional Skills',
-      icon: <FaUsers className="w-5 h-5 text-blue-600 dark:text-blue-400" />,
+      icon: <FaUsers className="w-5 h-5 text-yellow-500 dark:text-yellow-400 drop-shadow-sm" />,
       skills: ['Problem Solving', 'Adaptability', 'Quick Learner', 'Team Collaboration']
     }
   ];
@@ -537,8 +578,6 @@ const Portfolio = () => {
                 transition={{ delay: 0.7 }}
                 onClick={toggleTheme}
                 className="p-2 rounded-full bg-white dark:bg-slate-800 hover:bg-blue-100 dark:hover:bg-blue-900 transition-colors"
-                whileHover={{ scale: 1.1 }}
-                whileTap={{ scale: 0.9 }}
               >
                 <AnimatePresence mode="wait">
                   {theme === 'dark' ? (
@@ -656,55 +695,56 @@ const Portfolio = () => {
               initial={{ scale: 0, rotate: -180 }}
               animate={{ scale: 1, rotate: 0 }}
               transition={{ duration: 1, type: "spring", stiffness: 200, damping: 20 }}
-              whileHover="hovered"
-              className="mb-8"
+              whileHover={{ scale: 1.1 }}
+              className="mb-8 cursor-pointer"
             >
               <motion.div
-                onClick={() => setResumeOpen(true)} // 
-                variants={{
-                  hovered: {
-                    scale: 1.05,
-                    boxShadow: '0 0 25px rgba(59, 130, 246, 0.5)' // subtle blue glow
-                  },
-                }}
-                className="cursor-pointer relative mx-auto w-32 h-32 bg-blue-500 dark:bg-blue-600 rounded-2xl flex items-center justify-center shadow-2xl transition-all duration-300"
+                className="relative mx-auto w-32 h-32"
+                onClick={handleLogoClick}
+                animate={isSpinning ? { rotate: 360 } : {}}
+                transition={isSpinning ? { 
+                  duration: 1, 
+                  ease: "easeInOut",
+                  repeat: 1,
+                  repeatType: "loop"
+                } : {}}
               >
-                {/* Overlay for text */}
                 <motion.div
-                  variants={{
-                    hovered: {
-                      backgroundColor: "rgba(0,0,0,0.15)",
-                    },
+                  className={`absolute inset-0 ${logoColors[logoColorIndex]} rounded-2xl flex items-center justify-center transition-all duration-300`}
+                  whileHover={{ 
+                    scale: 1.05,
+                    filter: 'brightness(0.9)'
                   }}
-                  className="absolute inset-2 bg-black/20 dark:bg-black/30 rounded-xl flex items-center justify-center transition-colors duration-300"
                 >
+                  {/* Overlay for text */}
                   <motion.div
-                    variants={{
-                      hovered: {
-                        scale: 1.1,
-                      },
+                    className="absolute inset-2 bg-black/20 dark:bg-black/30 rounded-xl flex items-center justify-center transition-colors duration-300"
+                    whileHover={{
+                      backgroundColor: "rgba(0,0,0,0.3)",
                     }}
-                    className="text-white dark:text-white text-2xl font-mono transition-transform duration-300"
                   >
-                    {'</>'}
+                    <motion.div
+                      className={`text-2xl font-mono transition-transform duration-300 ${textColor}`}
+                      whileHover={{
+                        scale: 1.1,
+                      }}
+                    >
+                      {'</>'}
+                    </motion.div>
                   </motion.div>
+
+                  {/* Top-right bouncing dot */}
+                  <motion.div
+                    className={`absolute -top-2 -right-2 w-6 h-6 ${dotColors[logoColorIndex]} rounded-full animate-pulse`}
+                    whileHover={{ scale: 1.3 }}
+                  />
+
+                  {/* Bottom-left bouncing dot */}
+                  <motion.div
+                    className={`absolute -bottom-2 -left-2 w-4 h-4 ${dotColors[logoColorIndex]} rounded-full animate-bounce`}
+                    whileHover={{ scale: 1.2 }}
+                  />
                 </motion.div>
-
-                {/* Top-right bouncing dot */}
-                <motion.div
-                  className="absolute -top-2 -right-2 w-6 h-6 bg-blue-400 dark:bg-blue-500 rounded-full animate-pulse"
-                  variants={{
-                    hovered: { scale: 1.3 },
-                  }}
-                />
-
-                {/* Bottom-left bouncing dot */}
-                <motion.div
-                  className="absolute -bottom-2 -left-2 w-4 h-4 bg-blue-300 dark:bg-blue-400 rounded-full animate-bounce"
-                  variants={{
-                    hovered: { scale: 1.2 },
-                  }}
-                />
               </motion.div>
             </motion.div>
             
@@ -780,7 +820,7 @@ const Portfolio = () => {
               AI/ML Engineer & Full-Stack Developer
             </motion.p>
             
-           <motion.div
+            <motion.div
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: 3 }}
@@ -795,7 +835,7 @@ const Portfolio = () => {
               >
                 <Button
                   size="lg"
-                  className="flex items-center gap-2 bg-black dark:bg-white hover:bg-gray-800 dark:hover:bg-gray-300"
+                  className="flex items-center gap-2 bg-gray-800 text-white hover:bg-gray-100 hover:text-gray-900 dark:bg-gray-100 dark:text-gray-900 dark:hover:bg-gray-800 dark:hover:text-white shadow-lg transition-all duration-300"
                 >
                   <FaGithub className="w-5 h-5" />
                   GitHub
@@ -812,7 +852,7 @@ const Portfolio = () => {
                 <Button
                   size="lg"
                   variant="outline"
-                  className="flex items-center gap-2 bg-blue-500 dark:bg-blue-700 text-white hover:text-white border border-blue-500 dark:border-blue-700 hover:bg-blue-600 dark:hover:bg-blue-600"
+                  className="flex items-center gap-2 bg-blue-500 dark:bg-blue-700 text-white hover:text-white border border-blue-500 dark:border-blue-700 hover:bg-blue-600 dark:hover:bg-blue-600 shadow-lg"
                 >
                   <FaLinkedin className="w-5 h-5" />
                   LinkedIn
@@ -882,7 +922,7 @@ const Portfolio = () => {
               <Card className="rounded-3xl shadow-md hover:shadow-lg transition-all duration-300 bg-white dark:bg-gray-800/50 border border-gray-200 dark:border-gray-700">
                 <CardHeader>
                   <div className="flex items-center gap-3">
-                    <FaGraduationCap className="w-6 h-6 text-blue-600 dark:text-blue-400" />
+                    <FaGraduationCap className="w-6 h-6 text-blue-500 dark:text-blue-400 drop-shadow-sm" />
                     <div>
                       <CardTitle className="text-gray-900 dark:text-white">Bachelor of Technology, CSE (Artificial Intelligence)</CardTitle>
                       <CardDescription className="text-gray-600 dark:text-gray-400">Vignan's Institute Of Information Technology</CardDescription>
@@ -918,7 +958,7 @@ const Portfolio = () => {
               <Card className="rounded-3xl shadow-md hover:shadow-lg transition-all duration-300 bg-white dark:bg-gray-800/50 border border-gray-200 dark:border-gray-700">
                 <CardHeader>
                   <div className="flex items-center gap-3">
-                    <FaBriefcase className="w-6 h-6 text-blue-600 dark:text-blue-400" />
+                    <FaBriefcase className="w-6 h-6 text-purple-800 dark:text-purple-400 drop-shadow-sm" />
                     <div>
                       <CardTitle className="text-gray-900 dark:text-white">AI&ML Research Internship</CardTitle>
                       <CardDescription className="text-gray-600 dark:text-gray-400">Indian Institute of Information Technology, Allahabad (IIITA)</CardDescription>
@@ -965,7 +1005,7 @@ const Portfolio = () => {
                   }}
                   whileHover={{ scale: 1.02 }}
                 >
-                  <Card className="rounded-3xl shadow-md transition-all duration-300 border flex flex-col h-full 
+                  <Card className="rounded-3xl shadow-md hover:shadow-lg transition-all duration-300 border flex flex-col h-full 
                                     bg-white dark:bg-gray-800/50 border-gray-200 dark:border-gray-700
                                     hover:bg-blue-50 dark:hover:bg-blue-900/30 
                                     hover:border-blue-400 dark:hover:border-blue-500" >                  
@@ -1018,7 +1058,7 @@ const Portfolio = () => {
             transition={{ duration: 0.8, ease: [0.25, 0.46, 0.45, 0.94] }}
           >
             <h2 className="text-3xl font-bold text-center mb-12 text-gray-900 dark:text-white">Technical Skills</h2>
-            <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6 items-stretch">
+            <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
               {skillCategories.map((category, index) => (
                 <motion.div
                   key={category.title}
@@ -1033,7 +1073,7 @@ const Portfolio = () => {
                   whileHover={{ scale: 1.02 }}
                   className="h-full"
                 >
-                  <Card className="rounded-3xl shadow-md transition-all duration-300 border flex flex-col h-full 
+                  <Card className="rounded-3xl shadow-md hover:shadow-lg transition-all duration-300 border flex flex-col h-full 
                                     bg-white dark:bg-gray-800/50 border-gray-200 dark:border-gray-700
                                     hover:bg-blue-50 dark:hover:bg-blue-900/30 
                                     hover:border-blue-400 dark:hover:border-blue-500" >
@@ -1149,6 +1189,21 @@ const Portfolio = () => {
                 </CardContent>
               </Card>
             </motion.div>
+          </motion.div>
+        </div>
+      </section>
+
+      {/* Resume Section */}
+      <section id="resume" className="py-10">
+        <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+          <motion.div
+            initial={{ opacity: 0, y: 40 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.8, ease: [0.25, 0.46, 0.45, 0.94] }}
+          >
+            <h2 className="text-3xl font-bold text-center mb-8 text-gray-900 dark:text-white">Want to Hire?</h2>
+            <AnimatedPrinter onComplete={() => setResumeOpen(true)} />
           </motion.div>
         </div>
       </section>
@@ -1310,7 +1365,7 @@ const Portfolio = () => {
                             </svg>
                           ) : (
                             <svg className="w-5 h-5 mr-2 text-red-500 dark:text-red-400" fill="currentColor" viewBox="0 0 20 20">
-                              <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zM8.707 7.293a1 1 0 00-1.414 1.414L8.586 10l-1.293 1.293a1 1 0 101.414 1.414L10 11.414l1.293 1.293a1 1 0 001.414-1.414L11.414 10l1.293-1.293a1 1 0 00-1.414-1.414L10 8.586 8.707 7.293z" clipRule="evenodd" />
+                              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 18h2m-2-2v-2a2 2 0 002-2V6a2 2 0 002-2H6a2 2 0 00-2-2v2a2 2 0 002 2v2h2m2-4h2v2H6V6h2v2z" />
                             </svg>
                           )}
                           <span className="text-sm font-medium">{submitStatus.message}</span>
@@ -1372,12 +1427,12 @@ const Portfolio = () => {
             
             <div className="flex space-x-4 mt-4 md:mt-0">
             <Button size="sm" variant="ghost" asChild className="text-gray-600 hover:text-gray-900 hover:bg-gray-100 dark:text-white dark:hover:text-gray-200 dark:hover:bg-gray-800">
-              <a href="#" target="_blank" rel="noopener noreferrer">
+              <a href="https://github.com/yk0007" target="_blank" rel="noopener noreferrer">
                 <FaGithub className="w-5 h-5" /> 
               </a>
             </Button>
               <Button size="sm" variant="ghost" asChild className="text-gray-600 hover:text-gray-900 hover:bg-gray-100 dark:text-gray-400 dark:hover:text-gray-200 dark:hover:bg-gray-800">
-                <a href="#" target="_blank" rel="noopener noreferrer">
+                <a href="https://www.linkedin.com/in/yaswanthkuramdasu" target="_blank" rel="noopener noreferrer">
                   <FaLinkedin className="w-5 h-5 text-blue-600" />
                 </a>
               </Button>
