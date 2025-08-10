@@ -458,11 +458,11 @@ const Portfolio = () => {
   ];
 
   const aboutPoints = [
-    "Building AI solutions that actually solve real problems",
-    "Passionate about creating seamless user experiences",
-    "Always learning and adapting to new technologies",
-    "Believer in clean code and efficient algorithms",
-    "Enjoys collaborating with diverse teams to ship innovative products"
+    "AI/ML engineer crafting LLMs, AI agents, and GenAI applications",
+    "Skilled in Python, LangChain, LangGraph, and Problem solving",
+    "Love turning complex ideas into simple, elegant solutions",
+    "Always experimenting with emerging AI tools and models",
+    "A traveler through human moments, searching for meaning in their shadows"
   ];
 
   const [formData, setFormData] = useState({
