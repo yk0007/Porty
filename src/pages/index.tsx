@@ -395,6 +395,20 @@ const Portfolio = () => {
 
   const projects = [
     {
+      title: 'Roameo',
+      description: 'Multi-Agent AI Travel Planning System that converts travel requests into personalized, budget-aware itineraries via specialized agents for planning, research, POI selection, and scheduling',
+      tech: ['Python', 'LangChain', 'LangGraph', 'Tavily', 'Gemini', 'Mistral', 'Llama'],
+      github: 'https://github.com/yk0007/Roameo',
+      live: null
+    },
+    {
+      title: 'PolicyMind AI',
+      description: 'Intelligent QA system for insurance/policy documents using RAG with semantic chunking, indexing, query parsing, and LLM inference',
+      tech: ['Python', 'RAG', 'LangChain', 'ChromaDB', 'MegaParse', 'Streamlit', 'LLMs'],
+      github: 'https://github.com/yk0007/PolicyMindAI',
+      live: 'https://policymindai.streamlit.app/'
+    },
+    {
       title: 'RecipeGen',
       description: 'AI Recipe Management App with offline-first architecture using React Native and WatermelonDB',
       tech: ['React Native', 'Go', 'PostgreSQL', 'WatermelonDB', 'Gemini API'],
