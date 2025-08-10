@@ -244,7 +244,7 @@ const ResumeModal = ({
 
 
 const Portfolio = () => {
-  const { theme, setTheme } = useTheme();
+  const { theme, setTheme, resolvedTheme } = useTheme();
   const [mounted, setMounted] = useState(false);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const mobileMenuRef = useRef<HTMLDivElement>(null);
@@ -256,6 +256,16 @@ const Portfolio = () => {
   const [isClient, setIsClient] = useState(false);
   const [logoColorIndex, setLogoColorIndex] = useState(0);
   const [isSpinning, setIsSpinning] = useState(false);
+  const [isTransitioning, setIsTransitioning] = useState(false);
+  
+  // Handle theme change with smooth transition
+  const toggleTheme = () => {
+    if (isTransitioning) return;
+    setIsTransitioning(true);
+    setTheme(resolvedTheme === 'dark' ? 'light' : 'dark');
+    // Add a small delay to allow the theme transition to complete
+    setTimeout(() => setIsTransitioning(false), 300);
+  };
 
   // Dark colors for light theme, light colors for dark theme
   const logoColors = [
@@ -375,9 +385,7 @@ const Portfolio = () => {
     setMobileMenuOpen(false);
   };
 
-  const toggleTheme = () => {
-    setTheme(theme === 'dark' ? 'light' : 'dark');
-  };
+
 
   const navItems = [
     { id: 'resume', label: 'Resume', action: (id: string) => scrollToSection(id) },
@@ -574,19 +582,46 @@ const Portfolio = () => {
               
               <motion.button
                 initial={{ opacity: 0, scale: 0.8 }}
-                animate={{ opacity: 1, scale: 1 }}
-                transition={{ delay: 0.7 }}
+                animate={{ 
+                  opacity: 1, 
+                  scale: 1,
+                  transition: { 
+                    delay: 0.7,
+                    type: 'spring',
+                    stiffness: 500,
+                    damping: 20
+                  }
+                }}
+                whileTap={{ scale: 0.9 }}
                 onClick={toggleTheme}
-                className="p-2 rounded-full bg-white dark:bg-slate-800 hover:bg-blue-100 dark:hover:bg-blue-900 transition-colors"
+                disabled={isTransitioning}
+                className={`p-2 rounded-full bg-white dark:bg-slate-800 hover:bg-blue-100 dark:hover:bg-blue-900 transition-all duration-300 ${
+                  isTransitioning ? 'opacity-70 cursor-not-allowed' : ''
+                }`}
+                aria-label="Toggle theme"
               >
                 <AnimatePresence mode="wait">
-                  {theme === 'dark' ? (
+                  {resolvedTheme === 'dark' ? (
                     <motion.div
                       key="sun"
                       initial={{ rotate: -90, opacity: 0 }}
-                      animate={{ rotate: 0, opacity: 1 }}
-                      exit={{ rotate: 90, opacity: 0 }}
-                      transition={{ duration: 0.3 }}
+                      animate={{ 
+                        rotate: 0, 
+                        opacity: 1,
+                        transition: { 
+                          type: 'spring',
+                          stiffness: 500,
+                          damping: 20
+                        }
+                      }}
+                      exit={{ 
+                        rotate: 90, 
+                        opacity: 0,
+                        transition: { 
+                          duration: 0.3,
+                          ease: 'easeInOut'
+                        }
+                      }}
                     >
                       <FaSun className="w-4 h-4 text-yellow-400" />
                     </motion.div>
@@ -609,21 +644,47 @@ const Portfolio = () => {
             <div className="md:hidden flex items-center space-x-4">
               <motion.button
                 initial={{ opacity: 0, scale: 0.8 }}
-                animate={{ opacity: 1, scale: 1 }}
-                transition={{ delay: 0.7 }}
+                animate={{ 
+                  opacity: 1, 
+                  scale: 1,
+                  transition: { 
+                    delay: 0.7,
+                    type: 'spring',
+                    stiffness: 500,
+                    damping: 20
+                  }
+                }}
                 onClick={toggleTheme}
-                className="p-2 rounded-full bg-white dark:bg-slate-800 hover:bg-blue-100 dark:hover:bg-blue-900 transition-colors"
+                disabled={isTransitioning}
+                className={`p-2 rounded-full bg-white dark:bg-slate-800 hover:bg-blue-100 dark:hover:bg-blue-900 transition-all duration-300 ${
+                  isTransitioning ? 'opacity-70 cursor-not-allowed' : ''
+                }`}
                 whileHover={{ scale: 1.1 }}
                 whileTap={{ scale: 0.9 }}
+                aria-label="Toggle theme"
               >
                 <AnimatePresence mode="wait">
-                  {theme === 'dark' ? (
+                  {resolvedTheme === 'dark' ? (
                     <motion.div
                       key="sun"
                       initial={{ rotate: -90, opacity: 0 }}
-                      animate={{ rotate: 0, opacity: 1 }}
-                      exit={{ rotate: 90, opacity: 0 }}
-                      transition={{ duration: 0.3 }}
+                      animate={{ 
+                        rotate: 0, 
+                        opacity: 1,
+                        transition: { 
+                          type: 'spring',
+                          stiffness: 500,
+                          damping: 20
+                        }
+                      }}
+                      exit={{ 
+                        rotate: 90, 
+                        opacity: 0,
+                        transition: { 
+                          duration: 0.3,
+                          ease: 'easeInOut'
+                        }
+                      }}
                     >
                       <FaSun className="w-4 h-4 text-yellow-400" />
                     </motion.div>
@@ -631,11 +692,25 @@ const Portfolio = () => {
                     <motion.div
                       key="moon"
                       initial={{ rotate: 90, opacity: 0 }}
-                      animate={{ rotate: 0, opacity: 1 }}
-                      exit={{ rotate: -90, opacity: 0 }}
-                      transition={{ duration: 0.3 }}
+                      animate={{ 
+                        rotate: 0, 
+                        opacity: 1,
+                        transition: { 
+                          type: 'spring',
+                          stiffness: 500,
+                          damping: 20
+                        }
+                      }}
+                      exit={{ 
+                        rotate: -90, 
+                        opacity: 0,
+                        transition: { 
+                          duration: 0.3,
+                          ease: 'easeInOut'
+                        }
+                      }}
                     >
-                      <FaMoon className="w-4 h-4 text-blue-600" />
+                      <FaMoon className="w-4 h-4 text-blue-600 dark:text-blue-400" />
                     </motion.div>
                   )}
                 </AnimatePresence>
