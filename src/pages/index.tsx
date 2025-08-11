@@ -257,6 +257,35 @@ const Portfolio = () => {
   const [logoColorIndex, setLogoColorIndex] = useState(0);
   const [isSpinning, setIsSpinning] = useState(false);
   const [isTransitioning, setIsTransitioning] = useState(false);
+  const [scrollY, setScrollY] = useState(0);
+  const mainContentRef = useRef<HTMLDivElement>(null);
+
+  // Add scroll effect for the radial blur
+  useEffect(() => {
+    const handleScroll = () => {
+      setScrollY(window.scrollY);
+      
+      // Calculate scroll progress (0 to 1)
+      if (mainContentRef.current) {
+        const { scrollTop, scrollHeight, clientHeight } = mainContentRef.current;
+        const progress = scrollTop / (scrollHeight - clientHeight);
+        setScrollProgress(progress);
+      }
+    };
+
+    const mainContent = mainContentRef.current;
+    if (mainContent) {
+      mainContent.addEventListener('scroll', handleScroll);
+      // Initial calculation
+      handleScroll();
+    }
+
+    return () => {
+      if (mainContent) {
+        mainContent.removeEventListener('scroll', handleScroll);
+      }
+    };
+  }, []);
   
   // Handle theme change with smooth transition
   const toggleTheme = () => {
@@ -406,7 +435,7 @@ const Portfolio = () => {
       description: 'Intelligent QA system for insurance/policy documents using RAG with semantic chunking, indexing, query parsing, and LLM inference',
       tech: ['Python', 'RAG', 'LangChain', 'ChromaDB', 'MegaParse', 'Streamlit', 'LLMs'],
       github: 'https://github.com/yk0007/PolicyMindAI',
-      live: 'https://policymindai.streamlit.app/'
+      live: 'https://policymind.streamlit.app/'
     },
     {
       title: 'RecipeGen',
@@ -540,15 +569,29 @@ const Portfolio = () => {
 
   if (!mounted) return null;
 
+  // Calculate the opacity based on scroll position
+  const bottomBlurOpacity = Math.min(scrollProgress * 2, 0.8);
+  const contentBlurAmount = Math.min(scrollProgress * 20, 8);
+
   return (
-    <div 
-      className="min-h-screen text-gray-900 dark:text-gray-100"
-      style={{
-        background: theme === 'dark' 
-          ? 'radial-gradient(circle at center, #1e3a8a 0%, #000000 100%)'
-          : '#ffffff'
-      }}
-    >
+    <div className="relative min-h-screen bg-background text-foreground transition-colors duration-300 overflow-hidden">
+      {/* Bottom Radial Blur Effect - Mobile Only */}
+      <div 
+        className="md:hidden fixed bottom-0 left-0 right-0 h-64 pointer-events-none z-40 transition-opacity duration-300"
+        style={{
+          background: `radial-gradient(ellipse at center, transparent 0%, ${
+            resolvedTheme === 'dark' ? 'rgba(17, 24, 39, 0.9)' : 'rgba(255, 255, 255, 0.9)'
+          } 50%, ${
+            resolvedTheme === 'dark' ? 'rgba(17, 24, 39, 1)' : 'rgba(255, 255, 255, 1)'
+          } 100%)`,
+          opacity: bottomBlurOpacity,
+          backdropFilter: 'blur(8px)',
+          WebkitBackdropFilter: 'blur(8px)',
+          transform: 'translateY(50%)',
+          maskImage: 'linear-gradient(to bottom, transparent 0%, black 50%)',
+          WebkitMaskImage: 'linear-gradient(to bottom, transparent 0%, black 50%)'
+        }}
+      />
       {/* Scroll Progress Bar */}
       <motion.div
         className="fixed top-0 left-0 right-0 h-1 bg-gradient-to-r from-blue-500 to-blue-600 z-50"
