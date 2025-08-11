@@ -471,32 +471,27 @@ const Portfolio = () => {
     {
       title: 'Languages',
       icon: <FaCode className="w-5 h-5 text-red-500 dark:text-red-400 drop-shadow-sm" />,
-      skills: ['Python', 'Go', 'C++', 'Java', 'JavaScript (ES6+)', 'TypeScript', 'HTML5', 'CSS3', 'SQL']
+      skills: ['Python', 'C++', 'Java', 'JavaScript', 'HTML5', 'CSS3', 'SQL']
     },
     {
       title: 'AI/ML',
       icon: <FaBrain className="w-5 h-5 text-purple-500 dark:text-purple-400 drop-shadow-sm" />,
-      skills: ['PyTorch', 'TensorFlow', 'Scikit-learn', 'Hugging Face', 'Transformers', 'PEFT', 'LLMs']
+      skills: ['PyTorch', 'TensorFlow', 'Hugging Face', 'Transformers', 'Multi-Modal', 'RAG', 'PEFT', 'LangChain', 'LangGraph', 'CrewAI']
     },
     {
       title: 'Web & Mobile',
       icon: <FaCode className="w-5 h-5 text-emerald-500 dark:text-emerald-400 drop-shadow-sm" />,
-      skills: ['React', 'Node.js', 'Express', 'Vite', 'Next.js', 'Tailwind CSS', 'React Native', 'Framer']
+      skills: ['React', 'Node.js', 'Express', 'Flask', 'FastAPI', 'Vite', 'Tailwind CSS']
     },
     {
       title: 'Databases & Platforms',
       icon: <FaDatabase className="w-5 h-5 text-orange-500 dark:text-orange-400 drop-shadow-sm" />,
-      skills: ['MongoDB', 'PostgreSQL','MySQL', 'Firebase', 'Supabase', 'WatermelonDB', 'Clerk']
+      skills: ['MongoDB', 'PostgreSQL', 'Firebase', 'Supabase', 'WatermelonDB']
     },
     {
-      title: 'Developer Tools',
+      title: 'Tools & Others',
       icon: <FaTools className="w-5 h-5 text-gray-500 dark:text-gray-400 drop-shadow-sm" />,
-      skills: ['Git', 'GitHub', 'Docker', 'VS Code', 'Google Colab']
-    },
-    {
-      title: 'Professional Skills',
-      icon: <FaUsers className="w-5 h-5 text-yellow-500 dark:text-yellow-400 drop-shadow-sm" />,
-      skills: ['Problem Solving', 'Adaptability', 'Quick Learner', 'Team Collaboration']
+      skills: ['Git', 'GitHub', 'Docker', 'VS Code', 'Google Colab', 'DSA']
     }
   ];
 
