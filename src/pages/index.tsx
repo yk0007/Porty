@@ -954,7 +954,7 @@ const Portfolio = () => {
                 fontStyle: 'normal'
               }}
             >
-              AI/ML Engineer & Full-Stack Developer
+              AI/ML Engineer + GenAI Developer
             </motion.p>
             
             <motion.div
