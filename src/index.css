@@ -354,3 +354,8 @@
     scroll-behavior: smooth;
   }
 }
+.risque-regular {
+  font-family: "Risque", serif;
+  font-weight: 400;
+  font-style: normal;
+}

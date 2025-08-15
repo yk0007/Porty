@@ -358,7 +358,7 @@ const Portfolio = () => {
       
       setTimeout(() => {
         let greeting = '';
-        const text = 'Hi, I am ';
+        const text = 'Hey hi, I am ';
         let i = 0;
         
         const typeGreeting = () => {
@@ -810,7 +810,7 @@ const Portfolio = () => {
       </motion.div>
 
       {/* Hero Section */}
-      <section id="home" className="pt-10 lg:pt-20 min-h-screen flex items-center justify-center">
+      <section id="home" className="min-h-screen flex items-center justify-center">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
           <motion.div
             initial={{ opacity: 0, y: 50 }}
@@ -881,6 +881,11 @@ const Portfolio = () => {
                 animate={{ opacity: 1 }}
                 transition={{ delay: 0.5 }}
                 className={`mb-2 ${theme === 'light' ? 'drop-shadow-xl' : ''}`}
+                style={{ 
+                  fontSize: 'clamp(2rem, 4vw, 3rem)',
+                  fontFamily: '"Dancing Script", cursive',
+                  fontWeight: 'lighter'
+                }}
               >
                 {showGreeting}
               </motion.div>
@@ -943,6 +948,11 @@ const Portfolio = () => {
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: 2.5 }}
               className="text-xl md:text-2xl text-gray-700 dark:text-gray-300 mb-8"
+              style={{ 
+                fontFamily: '"Risque", serif',
+                fontWeight: '400',
+                fontStyle: 'normal'
+              }}
             >
               AI/ML Engineer & Full-Stack Developer
             </motion.p>
