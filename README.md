@@ -93,4 +93,4 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 - 📧 Email: [yaswanthkuramdasu@gmail.com](mailto:yaswanthkuramdasu@gmail.com)
 - 💼 LinkedIn: [Yaswanth Kuramdasu](https://linkedin.com/in/yourprofile)
 - 💻 GitHub: [@yk0007](https://github.com/yk0007)
-- 🌐 Portfolio: [https://your-portfolio-url.com](https://your-portfolio-url.com)
+- 🌐 Portfolio: [https://yk0007.pages.dev/](https://yk0007.pages.dev/)
