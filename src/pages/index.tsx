@@ -358,7 +358,7 @@ const Portfolio = () => {
       
       setTimeout(() => {
         let greeting = '';
-        const text = 'Hey hi, I am ';
+        const text = 'Hi, I am ';
         let i = 0;
         
         const typeGreeting = () => {
