@@ -1559,7 +1559,7 @@ const Portfolio = () => {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex flex-col md:flex-row justify-between items-center">
             <p className="text-gray-600 dark:text-gray-400">
-              &copy; 2024 Yaswanth Kuramdasu. All rights reserved.
+              &copy; yk0007
             </p>
             
             <div className="flex space-x-4 mt-4 md:mt-0">
