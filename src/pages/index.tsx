@@ -259,6 +259,15 @@ const Portfolio = () => {
   const [isTransitioning, setIsTransitioning] = useState(false);
   const [scrollY, setScrollY] = useState(0);
   const mainContentRef = useRef<HTMLDivElement>(null);
+  const [currentRoleIndex, setCurrentRoleIndex] = useState(0);
+  
+  const roles = [
+    'AI/ML ENGINEER',
+    'GENAI DEVELOPER',
+    'FULL STACK DEVELOPER',
+    'AI AGENTS DEVELOPER',
+    'SOFTWARE DEVELOPMENT'
+  ];
 
   // Add scroll effect for the radial blur
   useEffect(() => {
@@ -334,7 +343,7 @@ const Portfolio = () => {
     }, 1000);
   };
 
-  const { displayText: cipherText, decryptedFlags, isComplete } = useCipherTyping('Yaswanth Kuramdasu', startCipher);
+  const { displayText: cipherText, decryptedFlags, isComplete } = useCipherTyping('YASWANTH KURAMDASU', startCipher);
   useEffect(() => {
     setMounted(true);
     
@@ -358,7 +367,7 @@ const Portfolio = () => {
       
       setTimeout(() => {
         let greeting = '';
-        const text = 'Hi, I am ';
+        const text = "Hello! I'm ";
         let i = 0;
         
         const typeGreeting = () => {
@@ -376,6 +385,17 @@ const Portfolio = () => {
       }, 1000);
     }
   }, [mounted]);
+
+  // Role carousel effect
+  useEffect(() => {
+    if (!startCipher) return;
+    
+    const interval = setInterval(() => {
+      setCurrentRoleIndex((prev) => (prev + 1) % roles.length);
+    }, 3000); // Change role every 3 seconds
+    
+    return () => clearInterval(interval);
+  }, [startCipher, roles.length]);
 
   // Toggle mobile menu
   const toggleMobileMenu = () => {
@@ -611,8 +631,12 @@ const Portfolio = () => {
               initial={{ opacity: 0, x: -20 }}
               animate={{ opacity: 1, x: 0 }}
               transition={{ delay: 0.3 }}
-              className="font-bold text-black dark:text-white text-sm whitespace-nowrap"
-              style={{ fontFamily: 'Poppins, sans-serif' }}
+              className="text-black dark:text-white text-sm whitespace-nowrap"
+              style={{ 
+                fontFamily: "JetBrains Mono",
+                fontWeight: 1600,
+                fontStyle: 'normal'
+              }}
             >
               Yaswanth Kuramdasu
             </motion.div>
@@ -875,16 +899,17 @@ const Portfolio = () => {
               </motion.div>
             </motion.div>
             
-            <div className="text-4xl md:text-6xl font-bold mb-4 text-gray-900 dark:text-white min-h-[4rem] flex flex-col items-center justify-center space-y-4">
+            <div className="text-4xl md:text-6xl font-bold mb-10 text-gray-900 dark:text-white min-h-[4rem] flex flex-col items-center justify-center space-y-4">
               <motion.div
                 initial={{ opacity: 0 }}
                 animate={{ opacity: 1 }}
                 transition={{ delay: 0.5 }}
                 className={`mb-2 ${theme === 'light' ? 'drop-shadow-xl' : ''}`}
                 style={{
-                  fontFamily: '"Dancing Script", cursive',
-                  fontSize: 'clamp(2.25rem, 5vw, 3rem)',
-                  fontWeight: 400
+                  fontFamily: '"Poppins", sans-serif',
+                  fontSize: 'clamp(1.75rem, 4vw, 2.25rem)',
+                  fontWeight: 100,
+                  fontStyle: 'italic'
                 }}
               >
                 {showGreeting}
@@ -893,9 +918,12 @@ const Portfolio = () => {
                 initial={{ opacity: 0 }}
                 animate={{ opacity: startCipher ? 1 : 0 }}
                 transition={{ duration: 0.3 }}
-                className="font-mono tracking-wider text-center leading-tight"
+                className="tracking-wider text-center leading-tight"
                 style={{ 
-                  fontSize: 'clamp(2rem, 8vw, 4rem)'
+                  fontSize: 'clamp(2rem, 8vw, 4rem)',
+                  fontFamily: '"JetBrains Mono", monospace',
+                  fontWeight: 800,
+                  fontStyle: 'italic'
                 }}
               >
                 <span className="block sm:inline-block sm:text-7xl text-5xl sm:mr-5">
@@ -943,19 +971,56 @@ const Portfolio = () => {
               </motion.div>
             </div>
             
-            <motion.p
+            <motion.div
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: 2.5 }}
-              className="text-xl md:text-2xl text-gray-700 dark:text-gray-300 mb-8"
-              style={{
-                fontFamily: '"Risque", serif',
-                fontWeight: 400,
-                fontStyle: 'normal'
-              }}
+              className="text-xl md:text-2xl text-gray-700 dark:text-gray-300 mb-12 flex items-center justify-center leading-relaxed"
+              style={{ gap: '0.5rem' }}
             >
-              AI/ML Engineer + GenAI Developer
-            </motion.p>
+              <span
+                style={{
+                  fontFamily: '"Poppins", sans-serif',
+                  fontWeight: 200,
+                  fontStyle: 'italic'
+                }}
+              >
+                Looking for
+              </span>
+              
+              <div className="relative inline-block h-8 overflow-hidden" style={{ minWidth: 'fit-content' }}>
+                <AnimatePresence mode="wait">
+                  <motion.span
+                    key={currentRoleIndex}
+                    initial={{ y: 50, opacity: 0 }}
+                    animate={{ y: 0, opacity: 1 }}
+                    exit={{ y: -50, opacity: 0 }}
+                    transition={{ 
+                      duration: 0.5,
+                      ease: [0.25, 0.46, 0.45, 0.94]
+                    }}
+                    className="inline-block whitespace-nowrap"
+                    style={{
+                      fontFamily: '"JetBrains Mono", monospace',
+                      fontWeight: 400,
+                      fontStyle: 'normal'
+                    }}
+                  >
+                    {roles[currentRoleIndex]}
+                  </motion.span>
+                </AnimatePresence>
+              </div>
+              
+              <span
+                style={{
+                  fontFamily: '"Poppins", sans-serif',
+                  fontWeight: 200,
+                  fontStyle: 'italic'
+                }}
+              >
+                roles
+              </span>
+            </motion.div>
             
             <motion.div
               initial={{ opacity: 0, y: 20 }}
