@@ -1094,7 +1094,7 @@ const Portfolio = () => {
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
               transition={{ duration: 0.6 }}
-              className="lg:col-span-1 lg:row-span-2 rounded-2xl p-6 bg-gradient-to-br from-gray-200 to-gray-300 dark:from-gray-700 dark:to-gray-800 shadow-xl hover:shadow-2xl transition-all duration-300"
+              className="lg:col-span-1 lg:row-span-2 rounded-2xl p-6 bg-gradient-to-br from-gray-300 to-gray-400 dark:from-gray-900 dark:to-black shadow-2xl hover:shadow-[0_30px_60px_-15px_rgba(0,0,0,0.75)] transition-all duration-300 transform-gpu hover:-translate-y-1 hover:scale-[1.02]"
             >
               <h3 className="text-xl font-bold mb-4 text-gray-900 dark:text-white" style={{ fontFamily: '"JetBrains Mono", monospace' }}>
                 About Me
@@ -1123,7 +1123,7 @@ const Portfolio = () => {
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
               transition={{ duration: 0.6, delay: 0.1 }}
-              className="lg:col-span-2 lg:row-span-1 rounded-2xl p-6 bg-gradient-to-br from-gray-200 to-gray-300 dark:from-gray-700 dark:to-gray-800 shadow-xl hover:shadow-2xl transition-all duration-300"
+              className="lg:col-span-2 lg:row-span-1 rounded-2xl p-6 bg-gradient-to-br from-gray-300 to-gray-400 dark:from-gray-900 dark:to-black shadow-2xl hover:shadow-[0_30px_60px_-15px_rgba(0,0,0,0.75)] transition-all duration-300 transform-gpu hover:-translate-y-1 hover:scale-[1.02]"
             >
               <h3 className="text-xl font-bold mb-4 text-gray-900 dark:text-white" style={{ fontFamily: '"JetBrains Mono", monospace' }}>
                 Education
@@ -1158,7 +1158,7 @@ const Portfolio = () => {
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
               transition={{ duration: 0.6, delay: 0.2 }}
-              className="lg:col-span-1 lg:row-span-1 rounded-2xl p-6 bg-gradient-to-br from-gray-200 to-gray-300 dark:from-gray-700 dark:to-gray-800 shadow-xl hover:shadow-2xl transition-all duration-300"
+              className="lg:col-span-1 lg:row-span-1 rounded-2xl p-6 bg-gradient-to-br from-gray-300 to-gray-400 dark:from-gray-900 dark:to-black shadow-2xl hover:shadow-[0_30px_60px_-15px_rgba(0,0,0,0.75)] transition-all duration-300 transform-gpu hover:-translate-y-1 hover:scale-[1.02]"
             >
               <div className="flex flex-col justify-center h-full">
                 <h3 className="text-lg font-bold mb-3 text-gray-900 dark:text-white" style={{ fontFamily: '"JetBrains Mono", monospace' }}>
@@ -1176,7 +1176,7 @@ const Portfolio = () => {
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
               transition={{ duration: 0.6, delay: 0.3 }}
-              className="lg:col-span-1 lg:row-span-1 rounded-2xl p-6 bg-gradient-to-br from-gray-200 to-gray-300 dark:from-gray-700 dark:to-gray-800 shadow-xl hover:shadow-2xl transition-all duration-300"
+              className="lg:col-span-1 lg:row-span-1 rounded-2xl p-6 bg-gradient-to-br from-gray-300 to-gray-400 dark:from-gray-900 dark:to-black shadow-2xl hover:shadow-[0_30px_60px_-15px_rgba(0,0,0,0.75)] transition-all duration-300 transform-gpu hover:-translate-y-1 hover:scale-[1.02]"
             >
               <h3 className="text-lg font-bold mb-4 text-gray-900 dark:text-white" style={{ fontFamily: '"JetBrains Mono", monospace' }}>
                 Certifications
@@ -1210,7 +1210,7 @@ const Portfolio = () => {
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
               transition={{ duration: 0.6, delay: 0.4 }}
-              className="lg:col-span-2 lg:row-span-1 rounded-2xl p-6 bg-gradient-to-br from-gray-200 to-gray-300 dark:from-gray-700 dark:to-gray-800 shadow-xl hover:shadow-2xl transition-all duration-300"
+              className="lg:col-span-2 lg:row-span-1 rounded-2xl p-6 bg-gradient-to-br from-gray-300 to-gray-400 dark:from-gray-900 dark:to-black shadow-2xl hover:shadow-[0_30px_60px_-15px_rgba(0,0,0,0.75)] transition-all duration-300 transform-gpu hover:-translate-y-1 hover:scale-[1.02]"
             >
               <div className="flex items-start gap-4">
                 <FaBriefcase className="w-6 h-6 text-gray-900 dark:text-white mt-1" />
@@ -1251,7 +1251,7 @@ const Portfolio = () => {
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
               transition={{ duration: 0.6, delay: 0.5 }}
-              className="lg:col-span-1 lg:row-span-1 rounded-2xl p-6 bg-gradient-to-br from-gray-200 to-gray-300 dark:from-gray-700 dark:to-gray-800 shadow-xl hover:shadow-2xl transition-all duration-300"
+              className="lg:col-span-1 lg:row-span-1 rounded-2xl p-6 bg-gradient-to-br from-gray-300 to-gray-400 dark:from-gray-900 dark:to-black shadow-2xl hover:shadow-[0_30px_60px_-15px_rgba(0,0,0,0.75)] transition-all duration-300 transform-gpu hover:-translate-y-1 hover:scale-[1.02]"
             >
               <h3 className="text-lg font-bold mb-3 text-gray-900 dark:text-white" style={{ fontFamily: '"JetBrains Mono", monospace' }}>
                 Achievements
