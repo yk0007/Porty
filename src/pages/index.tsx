@@ -1084,7 +1084,7 @@ const Portfolio = () => {
       </section>
 
       {/* Bento Grid Section - Desktop Only */}
-      <section className="hidden lg:block py-12 bg-gradient-to-b from-white to-gray-50 dark:from-transparent dark:to-gray-900/20">
+      <section className="hidden lg:block py-12 bg-transparent">
         <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 auto-rows-[minmax(220px,auto)]">
             
