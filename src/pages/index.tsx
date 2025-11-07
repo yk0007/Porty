@@ -262,7 +262,7 @@ const Portfolio = () => {
   const [currentRoleIndex, setCurrentRoleIndex] = useState(0);
   
   const roles = [
-    'AI/ML ENGINEER',
+    'AI ENGINEER',
     'GENAI DEVELOPER',
     'FULL STACK DEVELOPER',
     'AI AGENTS DEVELOPER',
