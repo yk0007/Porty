@@ -428,7 +428,7 @@ const Portfolio = () => {
       description: 'Multi-Agent AI Travel Planning System that converts travel requests into personalized, budget-aware itineraries via specialized agents for planning, research, POI selection, and scheduling',
       tech: ['Python', 'LangChain', 'LangGraph', 'Tavily', 'Gemini', 'Mistral', 'Llama'],
       github: 'https://github.com/yk0007/Roameo',
-      live: null
+      live: 'https://roameo-app.vercel.app/'
     },
     {
       title: 'PolicyMind AI',
@@ -471,17 +471,17 @@ const Portfolio = () => {
     {
       title: 'Languages',
       icon: <FaCode className="w-5 h-5 text-red-500 dark:text-red-400 drop-shadow-sm" />,
-      skills: ['Python', 'C++', 'Java', 'JavaScript', 'HTML5', 'CSS3', 'SQL']
+      skills: ['Python', 'C++', 'JavaScript', 'HTML5', 'CSS3', 'SQL']
     },
     {
       title: 'AI/ML',
       icon: <FaBrain className="w-5 h-5 text-purple-500 dark:text-purple-400 drop-shadow-sm" />,
-      skills: ['PyTorch', 'TensorFlow', 'Hugging Face', 'Transformers', 'Multi-Modal', 'RAG', 'PEFT', 'LangChain', 'LangGraph', 'CrewAI']
+      skills: ['PyTorch', 'Hugging Face', 'Transformers', 'Multi-Modal', 'RAG', 'PEFT', 'LangChain', 'LangGraph', 'CrewAI']
     },
     {
       title: 'Web & Mobile',
       icon: <FaCode className="w-5 h-5 text-emerald-500 dark:text-emerald-400 drop-shadow-sm" />,
-      skills: ['React', 'Node.js', 'Express', 'Flask', 'FastAPI', 'Vite', 'Tailwind CSS']
+      skills: ['React', 'Node.js', 'FastAPI', 'Tailwind CSS']
     },
     {
       title: 'Databases & Platforms',
@@ -491,7 +491,7 @@ const Portfolio = () => {
     {
       title: 'Tools & Others',
       icon: <FaTools className="w-5 h-5 text-gray-500 dark:text-gray-400 drop-shadow-sm" />,
-      skills: ['Git', 'GitHub', 'Docker', 'VS Code', 'Google Colab', 'DSA']
+      skills: ['Git', 'GitHub', 'VS Code', 'Google Colab', 'DSA']
     }
   ];
 
@@ -881,10 +881,10 @@ const Portfolio = () => {
                 animate={{ opacity: 1 }}
                 transition={{ delay: 0.5 }}
                 className={`mb-2 ${theme === 'light' ? 'drop-shadow-xl' : ''}`}
-                style={{ 
-                  fontSize: 'clamp(2rem, 4vw, 3rem)',
+                style={{
                   fontFamily: '"Dancing Script", cursive',
-                  fontWeight: 'lighter'
+                  fontSize: 'clamp(2.25rem, 5vw, 3rem)',
+                  fontWeight: 400
                 }}
               >
                 {showGreeting}
@@ -948,9 +948,9 @@ const Portfolio = () => {
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: 2.5 }}
               className="text-xl md:text-2xl text-gray-700 dark:text-gray-300 mb-8"
-              style={{ 
+              style={{
                 fontFamily: '"Risque", serif',
-                fontWeight: '400',
+                fontWeight: 400,
                 fontStyle: 'normal'
               }}
             >
@@ -1194,7 +1194,7 @@ const Portfolio = () => {
             viewport={{ once: true }}
             transition={{ duration: 0.8, ease: [0.25, 0.46, 0.45, 0.94] }}
           >
-            <h2 className="text-3xl font-bold text-center mb-12 text-gray-900 dark:text-white">Technical Skills</h2>
+            <h2 className="text-3xl font-bold text-center mb-12 text-gray-900 dark:text-white">My Tech Stack</h2>
             <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
               {skillCategories.map((category, index) => (
                 <motion.div
