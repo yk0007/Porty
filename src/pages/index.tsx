@@ -1094,7 +1094,7 @@ const Portfolio = () => {
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
               transition={{ duration: 0.6 }}
-              className="lg:col-span-1 lg:row-span-2 rounded-2xl p-6 bg-gradient-to-br from-gray-100 to-gray-200 dark:from-gray-800 dark:to-gray-900 shadow-md hover:shadow-lg transition-all duration-300"
+              className="lg:col-span-1 lg:row-span-2 rounded-2xl p-6 bg-gradient-to-br from-gray-200 to-gray-300 dark:from-gray-700 dark:to-gray-800 shadow-xl hover:shadow-2xl transition-all duration-300"
             >
               <h3 className="text-xl font-bold mb-4 text-gray-900 dark:text-white" style={{ fontFamily: '"JetBrains Mono", monospace' }}>
                 About Me
@@ -1123,7 +1123,7 @@ const Portfolio = () => {
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
               transition={{ duration: 0.6, delay: 0.1 }}
-              className="lg:col-span-2 lg:row-span-1 rounded-2xl p-6 bg-gradient-to-br from-gray-100 to-gray-200 dark:from-gray-800 dark:to-gray-900 shadow-md hover:shadow-lg transition-all duration-300"
+              className="lg:col-span-2 lg:row-span-1 rounded-2xl p-6 bg-gradient-to-br from-gray-200 to-gray-300 dark:from-gray-700 dark:to-gray-800 shadow-xl hover:shadow-2xl transition-all duration-300"
             >
               <h3 className="text-xl font-bold mb-4 text-gray-900 dark:text-white" style={{ fontFamily: '"JetBrains Mono", monospace' }}>
                 Education
@@ -1133,7 +1133,8 @@ const Portfolio = () => {
                   <FaGraduationCap className="w-6 h-6 text-gray-900 dark:text-white mt-1" />
                   <div>
                     <h4 className="font-semibold text-base text-gray-900 dark:text-white mb-2" style={{ fontFamily: '"Poppins", sans-serif' }}>
-                      Bachelor of Technology, CSE (AI)
+                      Bachelor of Technology<br />
+                      Computer Science and Engineering (Artificial Intelligence)
                     </h4>
                     <p className="text-sm text-gray-800 dark:text-gray-100 mb-2" style={{ fontFamily: '"Poppins", sans-serif' }}>
                       Vignan's Institute Of Information Technology
@@ -1157,7 +1158,7 @@ const Portfolio = () => {
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
               transition={{ duration: 0.6, delay: 0.2 }}
-              className="lg:col-span-1 lg:row-span-1 rounded-2xl p-6 bg-gradient-to-br from-gray-100 to-gray-200 dark:from-gray-800 dark:to-gray-900 shadow-md hover:shadow-lg transition-all duration-300"
+              className="lg:col-span-1 lg:row-span-1 rounded-2xl p-6 bg-gradient-to-br from-gray-200 to-gray-300 dark:from-gray-700 dark:to-gray-800 shadow-xl hover:shadow-2xl transition-all duration-300"
             >
               <div className="flex flex-col justify-center h-full">
                 <h3 className="text-lg font-bold mb-3 text-gray-900 dark:text-white" style={{ fontFamily: '"JetBrains Mono", monospace' }}>
@@ -1175,7 +1176,7 @@ const Portfolio = () => {
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
               transition={{ duration: 0.6, delay: 0.3 }}
-              className="lg:col-span-1 lg:row-span-1 rounded-2xl p-6 bg-gradient-to-br from-gray-100 to-gray-200 dark:from-gray-800 dark:to-gray-900 shadow-md hover:shadow-lg transition-all duration-300"
+              className="lg:col-span-1 lg:row-span-1 rounded-2xl p-6 bg-gradient-to-br from-gray-200 to-gray-300 dark:from-gray-700 dark:to-gray-800 shadow-xl hover:shadow-2xl transition-all duration-300"
             >
               <h3 className="text-lg font-bold mb-4 text-gray-900 dark:text-white" style={{ fontFamily: '"JetBrains Mono", monospace' }}>
                 Certifications
@@ -1209,7 +1210,7 @@ const Portfolio = () => {
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
               transition={{ duration: 0.6, delay: 0.4 }}
-              className="lg:col-span-2 lg:row-span-1 rounded-2xl p-6 bg-gradient-to-br from-gray-100 to-gray-200 dark:from-gray-800 dark:to-gray-900 shadow-md hover:shadow-lg transition-all duration-300"
+              className="lg:col-span-2 lg:row-span-1 rounded-2xl p-6 bg-gradient-to-br from-gray-200 to-gray-300 dark:from-gray-700 dark:to-gray-800 shadow-xl hover:shadow-2xl transition-all duration-300"
             >
               <div className="flex items-start gap-4">
                 <FaBriefcase className="w-6 h-6 text-gray-900 dark:text-white mt-1" />
@@ -1250,12 +1251,12 @@ const Portfolio = () => {
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
               transition={{ duration: 0.6, delay: 0.5 }}
-              className="lg:col-span-1 lg:row-span-1 rounded-2xl p-6 bg-gradient-to-br from-gray-100 to-gray-200 dark:from-gray-800 dark:to-gray-900 shadow-md hover:shadow-lg transition-all duration-300"
+              className="lg:col-span-1 lg:row-span-1 rounded-2xl p-6 bg-gradient-to-br from-gray-200 to-gray-300 dark:from-gray-700 dark:to-gray-800 shadow-xl hover:shadow-2xl transition-all duration-300"
             >
-              <h3 className="text-lg font-bold mb-4 text-gray-900 dark:text-white" style={{ fontFamily: '"JetBrains Mono", monospace' }}>
+              <h3 className="text-lg font-bold mb-3 text-gray-900 dark:text-white" style={{ fontFamily: '"JetBrains Mono", monospace' }}>
                 Achievements
               </h3>
-              <div className="space-y-4">
+              <div className="space-y-2.5">
                 <div className="flex items-start gap-2.5">
                   <FaTrophy className="w-5 h-5 text-gray-900 dark:text-white mt-0.5 flex-shrink-0" />
                   <div>
@@ -1275,6 +1276,17 @@ const Portfolio = () => {
                     </p>
                     <p className="text-xs text-gray-700 dark:text-gray-300 leading-relaxed" style={{ fontFamily: '"Poppins", sans-serif' }}>
                       Qualified for National Semi-final round
+                    </p>
+                  </div>
+                </div>
+                <div className="flex items-start gap-2.5">
+                  <FaTrophy className="w-5 h-5 text-gray-900 dark:text-white mt-0.5 flex-shrink-0" />
+                  <div>
+                    <p className="text-sm font-semibold text-gray-900 dark:text-white leading-tight mb-1" style={{ fontFamily: '"Poppins", sans-serif' }}>
+                      3 Star Coder at CodeChef
+                    </p>
+                    <p className="text-xs text-gray-700 dark:text-gray-300 leading-relaxed" style={{ fontFamily: '"Poppins", sans-serif' }}>
+                      Rating: 1644
                     </p>
                   </div>
                 </div>
