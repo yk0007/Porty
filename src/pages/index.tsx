@@ -1285,8 +1285,8 @@ const Portfolio = () => {
         </div>
       </section>
 
-      {/* About Section */}
-      <section id="about" className="py-20 bg-white dark:bg-transparent">
+      {/* About Section - Hidden, now in Bento Grid */}
+      {false && <section id="about" className="py-20 bg-white dark:bg-transparent">
         <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
           <motion.div
             initial={{ opacity: 0, y: 40 }}
@@ -1326,10 +1326,10 @@ const Portfolio = () => {
             </motion.div>
           </motion.div>
         </div>
-      </section>
+      </section>}
 
-      {/* Education Section */}
-      <section id="education" className="py-20">
+      {/* Education Section - Hidden, now in Bento Grid */}
+      {false && <section id="education" className="py-20">
         <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
           <motion.div
             initial={{ opacity: 0, y: 40 }}
@@ -1362,10 +1362,10 @@ const Portfolio = () => {
             </motion.div>
           </motion.div>
         </div>
-      </section>
+      </section>}
 
-      {/* Experience Section */}
-      <section id="experience" className="py-20 bg-white dark:bg-transparent">
+      {/* Experience Section - Hidden, now in Bento Grid */}
+      {false && <section id="experience" className="py-20 bg-white dark:bg-transparent">
         <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
           <motion.div
             initial={{ opacity: 0, y: 40 }}
@@ -1403,7 +1403,7 @@ const Portfolio = () => {
             </motion.div>
           </motion.div>
         </div>
-      </section>
+      </section>}
       
       {/* Skills Section */}
       <section id="skills" className="py-20 bg-white dark:bg-transparent">
@@ -1546,8 +1546,8 @@ const Portfolio = () => {
         </div>
       </section>
 
-      {/* Achievements Section */}
-      <section id="achievements" className="py-20">
+      {/* Achievements Section - Hidden, now in Bento Grid */}
+      {false && <section id="achievements" className="py-20">
         <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
           <motion.div
             initial={{ opacity: 0, y: 40 }}
@@ -1593,10 +1593,10 @@ const Portfolio = () => {
             </div>
           </motion.div>
         </div>
-      </section>
+      </section>}
 
-      {/* Certifications Section */}
-      <section id="certifications" className="py-20 bg-white dark:bg-transparent">
+      {/* Certifications Section - Hidden, now in Bento Grid */}
+      {false && <section id="certifications" className="py-20 bg-white dark:bg-transparent">
         <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
           <motion.div
             initial={{ opacity: 0, y: 40 }}
@@ -1639,7 +1639,7 @@ const Portfolio = () => {
             </motion.div>
           </motion.div>
         </div>
-      </section>
+      </section>}
 
       {/* Resume Section */}
       <section id="resume" className="py-10">
