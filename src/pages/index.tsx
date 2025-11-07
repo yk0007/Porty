@@ -32,6 +32,7 @@ import {
 } from 'react-icons/fa';
 import { useTheme } from 'next-themes';
 import AnimatedPrinter from '@/components/AnimatedPrinter';
+import { GridPattern } from '@/components/ui/grid-pattern';
 
 // Improved cipher typing animation hook
 const useCipherTyping = (targetText: string, shouldStart: boolean) => {
@@ -834,8 +835,25 @@ const Portfolio = () => {
       </motion.div>
 
       {/* Hero Section */}
-      <section id="home" className="min-h-screen flex items-center justify-center">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+      <section id="home" className="relative overflow-hidden min-h-screen flex items-center justify-center">
+        <GridPattern
+          squares={[
+            [4, 4],
+            [5, 1],
+            [8, 2],
+            [5, 3],
+            [5, 5],
+            [10, 10],
+            [12, 15],
+            [15, 10],
+            [10, 15],
+            [15, 10],
+            [10, 15],
+            [15, 10],
+          ]}
+          className="z-0 [mask-image:radial-gradient(400px_circle_at_center,white,transparent)] inset-x-0 inset-y-[-30%] h-[200%] skew-y-12"
+        />
+        <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
           <motion.div
             initial={{ opacity: 0, y: 50 }}
             animate={{ opacity: 1, y: 0 }}
@@ -1065,6 +1083,208 @@ const Portfolio = () => {
         </div>
       </section>
 
+      {/* Bento Grid Section */}
+      <section className="py-12 bg-gradient-to-b from-white to-gray-50 dark:from-transparent dark:to-gray-900/20">
+        <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 auto-rows-[minmax(220px,auto)]">
+            
+            {/* About Me - Large Purple Card (Left tall, spans 1 col, 2 rows) */}
+            <motion.div
+              initial={{ opacity: 0, y: 40 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.6 }}
+              className="lg:col-span-1 lg:row-span-2 rounded-2xl p-6 bg-gradient-to-br from-gray-100 to-gray-200 dark:from-gray-800 dark:to-gray-900 shadow-md hover:shadow-lg transition-all duration-300"
+            >
+              <h3 className="text-xl font-bold mb-4 text-gray-900 dark:text-white" style={{ fontFamily: '"JetBrains Mono", monospace' }}>
+                About Me
+              </h3>
+              <div className="space-y-3">
+                {aboutPoints.map((point, index) => (
+                  <motion.div
+                    key={index}
+                    initial={{ opacity: 0, x: -20 }}
+                    whileInView={{ opacity: 1, x: 0 }}
+                    viewport={{ once: true }}
+                    transition={{ delay: index * 0.1 }}
+                    className="flex items-start gap-2.5 text-gray-900 dark:text-white"
+                    style={{ fontFamily: '"Poppins", sans-serif' }}
+                  >
+                    <span className="text-gray-600 dark:text-gray-400 text-base mt-0.5">•</span>
+                    <span className="text-sm leading-relaxed">{point}</span>
+                  </motion.div>
+                ))}
+              </div>
+            </motion.div>
+
+            {/* Education - Pink Card (Top-right, wide) */}
+            <motion.div
+              initial={{ opacity: 0, y: 40 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.6, delay: 0.1 }}
+              className="lg:col-span-2 lg:row-span-1 rounded-2xl p-6 bg-gradient-to-br from-gray-100 to-gray-200 dark:from-gray-800 dark:to-gray-900 shadow-md hover:shadow-lg transition-all duration-300"
+            >
+              <h3 className="text-xl font-bold mb-4 text-gray-900 dark:text-white" style={{ fontFamily: '"JetBrains Mono", monospace' }}>
+                Education
+              </h3>
+              <div className="space-y-4">
+                <div className="flex items-start gap-3">
+                  <FaGraduationCap className="w-6 h-6 text-gray-900 dark:text-white mt-1" />
+                  <div>
+                    <h4 className="font-semibold text-base text-gray-900 dark:text-white mb-2" style={{ fontFamily: '"Poppins", sans-serif' }}>
+                      Bachelor of Technology, CSE (AI)
+                    </h4>
+                    <p className="text-sm text-gray-800 dark:text-gray-100 mb-2" style={{ fontFamily: '"Poppins", sans-serif' }}>
+                      Vignan's Institute Of Information Technology
+                    </p>
+                    <div className="flex items-center gap-2 flex-wrap">
+                      <span className="text-sm text-gray-900 dark:text-white font-medium" style={{ fontFamily: '"Poppins", sans-serif' }}>
+                        CGPA: 8.94 / 10.0
+                      </span>
+                      <Badge variant="secondary" className="bg-gray-600 text-white dark:bg-gray-700 text-xs px-2.5 py-0.5">
+                        Current
+                      </Badge>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </motion.div>
+
+            {/* Summary Card - Green Card (Middle-left) */}
+            <motion.div
+              initial={{ opacity: 0, y: 40 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.6, delay: 0.2 }}
+              className="lg:col-span-1 lg:row-span-1 rounded-2xl p-6 bg-gradient-to-br from-gray-100 to-gray-200 dark:from-gray-800 dark:to-gray-900 shadow-md hover:shadow-lg transition-all duration-300"
+            >
+              <div className="flex flex-col justify-center h-full">
+                <h3 className="text-lg font-bold mb-3 text-gray-900 dark:text-white" style={{ fontFamily: '"JetBrains Mono", monospace' }}>
+                  Quick Summary
+                </h3>
+                <p className="text-sm text-gray-900 dark:text-white leading-relaxed" style={{ fontFamily: '"Poppins", sans-serif' }}>
+                  AI/ML Engineer passionate about building intelligent systems with LLMs, AI agents, and GenAI applications
+                </p>
+              </div>
+            </motion.div>
+
+            {/* Certifications - Blue Card (Middle-right) */}
+            <motion.div
+              initial={{ opacity: 0, y: 40 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.6, delay: 0.3 }}
+              className="lg:col-span-1 lg:row-span-1 rounded-2xl p-6 bg-gradient-to-br from-gray-100 to-gray-200 dark:from-gray-800 dark:to-gray-900 shadow-md hover:shadow-lg transition-all duration-300"
+            >
+              <h3 className="text-lg font-bold mb-4 text-gray-900 dark:text-white" style={{ fontFamily: '"JetBrains Mono", monospace' }}>
+                Certifications
+              </h3>
+              <div className="space-y-3">
+                <div className="flex items-start gap-3">
+                  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 48 48" className="w-8 h-8 flex-shrink-0">
+                    <path fill="#FFC107" d="M43.611,20.083H42V20H24v8h11.303c-1.649,4.657-6.08,8-11.303,8c-6.627,0-12-5.373-12-12c0-6.627,5.373-12,12-12c3.059,0,5.842,1.154,7.961,3.039l5.657-5.657C34.046,6.053,29.268,4,24,4C12.955,4,4,12.955,4,24c0,11.045,8.955,20,20,20c11.045,0,20-8.955,20-20C44,22.659,43.862,21.35,43.611,20.083z"/>
+                    <path fill="#FF3D00" d="M6.306,14.691l6.571,4.819C14.655,15.108,18.961,12,24,12c3.059,0,5.842,1.154,7.961,3.039l5.657-5.657C34.046,6.053,29.268,4,24,4C16.318,4,9.656,8.337,6.306,14.691z"/>
+                    <path fill="#4CAF50" d="M24,44c5.166,0,9.86-1.977,13.409-5.192l-6.19-5.238C29.211,35.091,26.715,36,24,36c-5.202,0-9.619-3.317-11.283-7.946l-6.522,5.025C9.505,39.556,16.227,44,24,44z"/>
+                    <path fill="#1976D2" d="M43.611,20.083H42V20H24v8h11.303c-0.792,2.237-2.231,4.166-4.087,5.571c0.001-0.001,0.002-0.001,0.003-0.002l6.19,5.238C36.971,39.205,44,34,44,24C44,22.659,43.862,21.35,43.611,20.083z"/>
+                  </svg>
+                  <div>
+                    <p className="text-sm font-semibold text-gray-900 dark:text-white mb-1 leading-tight" style={{ fontFamily: '"Poppins", sans-serif' }}>
+                      Google Data Analytics
+                    </p>
+                    <p className="text-xs text-gray-800 dark:text-gray-100" style={{ fontFamily: '"Poppins", sans-serif' }}>
+                      Professional Certificate
+                    </p>
+                  </div>
+                </div>
+                <p className="text-xs text-gray-700 dark:text-gray-300 leading-relaxed" style={{ fontFamily: '"Poppins", sans-serif' }}>
+                  Comprehensive training in data analysis, visualization, and business intelligence tools
+                </p>
+              </div>
+            </motion.div>
+
+            {/* Work Experience - Orange Card (Bottom-left, wide) */}
+            <motion.div
+              initial={{ opacity: 0, y: 40 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.6, delay: 0.4 }}
+              className="lg:col-span-2 lg:row-span-1 rounded-2xl p-6 bg-gradient-to-br from-gray-100 to-gray-200 dark:from-gray-800 dark:to-gray-900 shadow-md hover:shadow-lg transition-all duration-300"
+            >
+              <div className="flex items-start gap-4">
+                <FaBriefcase className="w-6 h-6 text-gray-900 dark:text-white mt-1" />
+                <div className="flex-1">
+                  <h3 className="text-lg font-bold mb-2 text-gray-900 dark:text-white" style={{ fontFamily: '"JetBrains Mono", monospace' }}>
+                    Work Experience
+                  </h3>
+                  <h4 className="font-semibold text-base text-gray-900 dark:text-white mb-1" style={{ fontFamily: '"Poppins", sans-serif' }}>
+                    AI&ML Research Internship
+                  </h4>
+                  <p className="text-sm text-gray-800 dark:text-gray-100 mb-2" style={{ fontFamily: '"Poppins", sans-serif' }}>
+                    Indian Institute of Information Technology, Allahabad (IIITA)
+                  </p>
+                  <Badge variant="outline" className="border-gray-600 text-gray-900 dark:border-gray-400 dark:text-white mb-3 text-xs px-2.5 py-0.5">
+                    May 2024 - July 2024
+                  </Badge>
+                  <ul className="space-y-1.5 text-sm text-gray-900 dark:text-white" style={{ fontFamily: '"Poppins", sans-serif' }}>
+                    <li className="flex items-start gap-2">
+                      <span className="text-gray-600 dark:text-gray-400 text-sm">•</span>
+                      <span className="text-sm leading-relaxed">Developed a multimodal summarization system for Hinglish medical queries</span>
+                    </li>
+                    <li className="flex items-start gap-2">
+                      <span className="text-gray-600 dark:text-gray-400 text-sm">•</span>
+                      <span className="text-sm leading-relaxed">Utilized transformer-based LLMs and PEFT techniques (QLoRA)</span>
+                    </li>
+                    <li className="flex items-start gap-2">
+                      <span className="text-gray-600 dark:text-gray-400 text-sm">•</span>
+                      <span className="text-sm leading-relaxed">Enhanced factual accuracy by fusing visual and textual embeddings</span>
+                    </li>
+                  </ul>
+                </div>
+              </div>
+            </motion.div>
+
+            {/* Achievements - Yellow Card (Bottom-right) */}
+            <motion.div
+              initial={{ opacity: 0, y: 40 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.6, delay: 0.5 }}
+              className="lg:col-span-1 lg:row-span-1 rounded-2xl p-6 bg-gradient-to-br from-gray-100 to-gray-200 dark:from-gray-800 dark:to-gray-900 shadow-md hover:shadow-lg transition-all duration-300"
+            >
+              <h3 className="text-lg font-bold mb-4 text-gray-900 dark:text-white" style={{ fontFamily: '"JetBrains Mono", monospace' }}>
+                Achievements
+              </h3>
+              <div className="space-y-4">
+                <div className="flex items-start gap-2.5">
+                  <FaTrophy className="w-5 h-5 text-gray-900 dark:text-white mt-0.5 flex-shrink-0" />
+                  <div>
+                    <p className="text-sm font-semibold text-gray-900 dark:text-white leading-tight mb-1" style={{ fontFamily: '"Poppins", sans-serif' }}>
+                      Eureka! 2024, IIT Bombay
+                    </p>
+                    <p className="text-xs text-gray-700 dark:text-gray-300 leading-relaxed" style={{ fontFamily: '"Poppins", sans-serif' }}>
+                      Advanced to Final Round Pitching at Asia's largest B-Model competition
+                    </p>
+                  </div>
+                </div>
+                <div className="flex items-start gap-2.5">
+                  <FaTrophy className="w-5 h-5 text-gray-900 dark:text-white mt-0.5 flex-shrink-0" />
+                  <div>
+                    <p className="text-sm font-semibold text-gray-900 dark:text-white leading-tight mb-1" style={{ fontFamily: '"Poppins", sans-serif' }}>
+                      Smart India Hackathon 2024
+                    </p>
+                    <p className="text-xs text-gray-700 dark:text-gray-300 leading-relaxed" style={{ fontFamily: '"Poppins", sans-serif' }}>
+                      Qualified for National Semi-final round
+                    </p>
+                  </div>
+                </div>
+              </div>
+            </motion.div>
+
+          </div>
+        </div>
+      </section>
+
       {/* About Section */}
       <section id="about" className="py-20 bg-white dark:bg-transparent">
         <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -1074,7 +1294,7 @@ const Portfolio = () => {
             viewport={{ once: true }}
             transition={{ duration: 0.8, ease: [0.25, 0.46, 0.45, 0.94] }}
           >
-            <h2 className="text-3xl font-bold text-center mb-12 text-gray-900 dark:text-white">About Me</h2>
+            <h2 className="text-3xl font-bold text-center mb-12 text-gray-900 dark:text-white" style={{ fontFamily: '"JetBrains Mono", monospace' }}>About Me</h2>
             <motion.div
               whileHover={{ scale: 1.02 }}
               transition={{ type: "spring", stiffness: 200, damping: 20 }}
@@ -1094,6 +1314,7 @@ const Portfolio = () => {
                           ease: [0.25, 0.46, 0.45, 0.94]
                         }}
                         className="text-lg text-gray-700 dark:text-gray-300 flex items-center"
+                        style={{ fontFamily: '"Poppins", sans-serif' }}
                       >
                         <span className="mr-3 text-blue-600 dark:text-blue-400">•</span>
                         {point}
@@ -1116,7 +1337,7 @@ const Portfolio = () => {
             viewport={{ once: true }}
             transition={{ duration: 0.8, ease: [0.25, 0.46, 0.45, 0.94] }}
           >
-            <h2 className="text-3xl font-bold text-center mb-12 text-gray-900 dark:text-white">Education</h2>
+            <h2 className="text-3xl font-bold text-center mb-12 text-gray-900 dark:text-white" style={{ fontFamily: '"JetBrains Mono", monospace' }}>Education</h2>
             <motion.div
               whileHover={{ scale: 1.02 }}
               transition={{ type: "spring", stiffness: 200, damping: 20 }}
@@ -1126,14 +1347,14 @@ const Portfolio = () => {
                   <div className="flex items-center gap-3">
                     <FaGraduationCap className="w-6 h-6 text-blue-500 dark:text-blue-400 drop-shadow-sm" />
                     <div>
-                      <CardTitle className="text-gray-900 dark:text-white">Bachelor of Technology, CSE (Artificial Intelligence)</CardTitle>
-                      <CardDescription className="text-gray-600 dark:text-gray-400">Vignan's Institute Of Information Technology</CardDescription>
+                      <CardTitle className="text-gray-900 dark:text-white" style={{ fontFamily: '"Poppins", sans-serif' }}>Bachelor of Technology, CSE (Artificial Intelligence)</CardTitle>
+                      <CardDescription className="text-gray-600 dark:text-gray-400" style={{ fontFamily: '"Poppins", sans-serif' }}>Vignan's Institute Of Information Technology</CardDescription>
                     </div>
                   </div>
                 </CardHeader>
                 <CardContent>
                   <div className="flex justify-between items-center">
-                    <span className="text-gray-600 dark:text-gray-400">CGPA: 8.94 / 10.0</span>
+                    <span className="text-gray-600 dark:text-gray-400" style={{ fontFamily: '"Poppins", sans-serif' }}>CGPA: 8.94 / 10.0</span>
                     <Badge variant="secondary" className="bg-blue-100 text-blue-800 dark:bg-blue-900 dark:text-blue-200">Current</Badge>
                   </div>
                 </CardContent>
@@ -1152,7 +1373,7 @@ const Portfolio = () => {
             viewport={{ once: true }}
             transition={{ duration: 0.8, ease: [0.25, 0.46, 0.45, 0.94] }}
           >
-            <h2 className="text-3xl font-bold text-center mb-12 text-gray-900 dark:text-white">Experience</h2>
+            <h2 className="text-3xl font-bold text-center mb-12 text-gray-900 dark:text-white" style={{ fontFamily: '"JetBrains Mono", monospace' }}>Experience</h2>
             <motion.div
               whileHover={{ scale: 1.02 }}
               transition={{ type: "spring", stiffness: 200, damping: 20 }}
@@ -1162,23 +1383,98 @@ const Portfolio = () => {
                   <div className="flex items-center gap-3">
                     <FaBriefcase className="w-6 h-6 text-purple-800 dark:text-purple-400 drop-shadow-sm" />
                     <div>
-                      <CardTitle className="text-gray-900 dark:text-white">AI&ML Research Internship</CardTitle>
-                      <CardDescription className="text-gray-600 dark:text-gray-400">Indian Institute of Information Technology, Allahabad (IIITA)</CardDescription>
+                      <CardTitle className="text-gray-900 dark:text-white" style={{ fontFamily: '"Poppins", sans-serif' }}>AI&ML Research Internship</CardTitle>
+                      <CardDescription className="text-gray-600 dark:text-gray-400" style={{ fontFamily: '"Poppins", sans-serif' }}>Indian Institute of Information Technology, Allahabad (IIITA)</CardDescription>
                     </div>
                   </div>
                 </CardHeader>
                 <CardContent>
                   <div className="mb-4">
                     <Badge variant="outline" className="border-blue-300 text-blue-700 dark:border-blue-600 dark:text-blue-400">May 2024 - July 2024</Badge>
-                    <span className="ml-2 text-gray-600 dark:text-gray-400">Visakhapatnam, India</span>
+                    <span className="ml-2 text-gray-600 dark:text-gray-400" style={{ fontFamily: '"Poppins", sans-serif' }}></span>
                   </div>
-                  <ul className="space-y-2 text-gray-700 dark:text-gray-300">
-                    <li>• Developed a novel framework to summarize complex medical information from Hinglish text and images, improving clinical data extraction</li>
-                    <li>• Implemented this using advanced Transformer models and PEFT techniques like LoRA for efficient, high-performance model training</li>
+                  <ul className="space-y-2 text-gray-700 dark:text-gray-300" style={{ fontFamily: '"Poppins", sans-serif' }}>
+                  <li>Developed a multimodal summarization system to extract key clinical information from Hinglish medical queries and images.</li>
+                  <li>Utilized transformer-based LLMs and PEFT techniques (QLoRA) for efficient fine-tuning on limited hardware.</li>
+                  <li>Enhanced factual accuracy by fusing visual and textual embeddings, improving summarization quality and context.</li>
                   </ul>
                 </CardContent>
               </Card>
             </motion.div>
+          </motion.div>
+        </div>
+      </section>
+      
+      {/* Skills Section */}
+      <section id="skills" className="py-20 bg-white dark:bg-transparent">
+        <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+          <motion.div
+            initial={{ opacity: 0, y: 40 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.8, ease: [0.25, 0.46, 0.45, 0.94] }}
+          >
+            <h2 className="text-3xl font-bold text-center mb-12 text-gray-900 dark:text-white" style={{ fontFamily: '"JetBrains Mono", monospace' }}>My Tech Stack</h2>
+            
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 relative z-10 max-w-5xl mx-auto">
+              {skillCategories.map((category, index) => (
+                <motion.div
+                  key={category.title}
+                  initial={{ opacity: 0, y: 40 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  viewport={{ once: true }}
+                  transition={{ 
+                    duration: 0.6, 
+                    delay: index * 0.1,
+                    ease: [0.25, 0.46, 0.45, 0.94]
+                  }}
+                  className={`
+                    flex flex-col py-10 relative group
+                    border-gray-200 dark:border-gray-700
+                    ${index !== skillCategories.length - 1 ? 'border-r' : ''}
+                    ${index < 3 ? 'border-b' : ''}
+                  `}
+                  style={{ paddingLeft: '2.5rem', paddingRight: '2.5rem' }}
+                >
+                  {/* Hover gradient effect */}
+                  {index < 3 && (
+                    <div className="opacity-0 group-hover:opacity-100 transition duration-200 absolute inset-0 h-full w-full bg-gradient-to-t from-blue-50 dark:from-blue-900/20 to-transparent pointer-events-none" />
+                  )}
+                  {index >= 3 && (
+                    <div className="opacity-0 group-hover:opacity-100 transition duration-200 absolute inset-0 h-full w-full bg-gradient-to-b from-blue-50 dark:from-blue-900/20 to-transparent pointer-events-none" />
+                  )}
+                  
+                  {/* Icon */}
+                  <div className="mb-4 relative z-10 text-gray-600 dark:text-gray-400">
+                    {category.icon}
+                  </div>
+                  
+                  {/* Title with animated bar */}
+                  <div className="text-xl font-bold mb-4 relative z-10">
+                    <div className="absolute left-0 inset-y-0 h-6 group-hover:h-8 w-1 rounded-tr-full rounded-br-full bg-gray-300 dark:bg-gray-700 group-hover:bg-blue-500 transition-all duration-300 origin-center" />
+                    <span 
+                      className="group-hover:translate-x-2 transition duration-300 inline-block text-gray-900 dark:text-white pl-4"
+                      style={{ fontFamily: '"Poppins", sans-serif', fontWeight: 600 }}
+                    >
+                      {category.title}
+                    </span>
+                  </div>
+                  
+                  {/* Skills badges */}
+                  <div className="flex flex-wrap gap-2 relative z-10" style={{ fontFamily: '"Poppins", sans-serif' }}>
+                    {category.skills.map((skill) => (
+                      <Badge 
+                        key={skill} 
+                        variant="secondary" 
+                        className="bg-gray-100 text-gray-700 dark:bg-gray-800 dark:text-gray-300 hover:bg-blue-100 dark:hover:bg-blue-900/30 transition-colors"
+                      >
+                        {skill}
+                      </Badge>
+                    ))}
+                  </div>
+                </motion.div>
+              ))}
+            </div>
           </motion.div>
         </div>
       </section>
@@ -1192,7 +1488,7 @@ const Portfolio = () => {
             viewport={{ once: true }}
             transition={{ duration: 0.8, ease: [0.25, 0.46, 0.45, 0.94] }}
           >
-            <h2 className="text-3xl font-bold text-center mb-12 text-black dark:text-white">Projects</h2>
+            <h2 className="text-3xl font-bold text-center mb-12 text-black dark:text-white" style={{ fontFamily: '"JetBrains Mono", monospace' }}>Projects</h2>
             <div className="grid md:grid-cols-2 gap-6">
               {projects.map((project, index) => (
                 <motion.div
@@ -1212,8 +1508,8 @@ const Portfolio = () => {
                                     hover:bg-blue-50 dark:hover:bg-blue-900/30 
                                     hover:border-blue-400 dark:hover:border-blue-500" >                  
                     <CardHeader>
-                   <CardTitle className="text-black dark:text-white">{project.title}</CardTitle>
-                      <CardDescription className="text-gray-600 dark:text-gray-400">
+                   <CardTitle className="text-black dark:text-white" style={{ fontFamily: '"Poppins", sans-serif' }}>{project.title}</CardTitle>
+                      <CardDescription className="text-gray-600 dark:text-gray-400" style={{ fontFamily: '"Poppins", sans-serif' }}>
                          {project.description}
                       </CardDescription>
                    </CardHeader>
@@ -1249,56 +1545,6 @@ const Portfolio = () => {
           </motion.div>
         </div>
       </section>
-      
-      {/* Skills Section */}
-      <section id="skills" className="py-20 bg-white dark:bg-transparent">
-        <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
-          <motion.div
-            initial={{ opacity: 0, y: 40 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.8, ease: [0.25, 0.46, 0.45, 0.94] }}
-          >
-            <h2 className="text-3xl font-bold text-center mb-12 text-gray-900 dark:text-white">My Tech Stack</h2>
-            <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
-              {skillCategories.map((category, index) => (
-                <motion.div
-                  key={category.title}
-                  initial={{ opacity: 0, y: 40 }}
-                  whileInView={{ opacity: 1, y: 0 }}
-                  viewport={{ once: true }}
-                  transition={{ 
-                    duration: 0.6, 
-                    delay: index * 0.1,
-                    ease: [0.25, 0.46, 0.45, 0.94]
-                  }}
-                  whileHover={{ scale: 1.02 }}
-                  className="h-full"
-                >
-                  <Card className="rounded-3xl shadow-md hover:shadow-lg transition-all duration-300 border flex flex-col h-full 
-                                    bg-white dark:bg-gray-800/50 border-gray-200 dark:border-gray-700
-                                    hover:bg-blue-50 dark:hover:bg-blue-900/30 
-                                    hover:border-blue-400 dark:hover:border-blue-500" >
-                    <CardHeader>
-                      <CardTitle className="flex items-center gap-2 text-gray-900 dark:text-white">
-                        {category.icon}
-                        {category.title}
-                      </CardTitle>
-                    </CardHeader>
-                    <CardContent>
-                      <div className="flex flex-wrap gap-2">
-                        {category.skills.map((skill) => (
-                          <Badge key={skill} variant="outline" className="border-gray-300 text-gray-700 dark:border-gray-600 dark:text-gray-300">{skill}</Badge>
-                        ))}
-                      </div>
-                    </CardContent>
-                  </Card>
-                </motion.div>
-              ))}
-            </div>
-          </motion.div>
-        </div>
-      </section>
 
       {/* Achievements Section */}
       <section id="achievements" className="py-20">
@@ -1309,7 +1555,7 @@ const Portfolio = () => {
             viewport={{ once: true }}
             transition={{ duration: 0.8, ease: [0.25, 0.46, 0.45, 0.94] }}
           >
-            <h2 className="text-3xl font-bold text-center mb-12 text-gray-900 dark:text-white">Achievements & Awards</h2>
+            <h2 className="text-3xl font-bold text-center mb-12 text-gray-900 dark:text-white" style={{ fontFamily: '"JetBrains Mono", monospace' }}>Achievements & Awards</h2>
             <div className="space-y-4">
               <motion.div
                 whileHover={{ scale: 1.02 }}
@@ -1320,8 +1566,8 @@ const Portfolio = () => {
                     <div className="flex items-start gap-3">
                       <FaTrophy className="w-6 h-6 text-yellow-500 dark:text-yellow-400 mt-1" />
                       <div>
-                        <h3 className="font-semibold text-gray-900 dark:text-white">Eureka! 2024, IIT Bombay</h3>
-                        <p className="text-gray-600 dark:text-gray-400">Qualified the Zonal Round and advanced to the Final Round Pitching of Asia's largest B-Model competition</p>
+                        <h3 className="font-semibold text-gray-900 dark:text-white" style={{ fontFamily: '"Poppins", sans-serif' }}>Eureka! 2024, IIT Bombay</h3>
+                        <p className="text-gray-600 dark:text-gray-400" style={{ fontFamily: '"Poppins", sans-serif' }}>Qualified the Zonal Round and advanced to the Final Round Pitching of Asia's largest B-Model competition</p>
                       </div>
                     </div>
                   </CardContent>
@@ -1337,8 +1583,8 @@ const Portfolio = () => {
                     <div className="flex items-start gap-3">
                       <FaTrophy className="w-6 h-6 text-yellow-500 dark:text-yellow-400 mt-1" />
                       <div>
-                        <h3 className="font-semibold text-gray-900 dark:text-white">Smart India Hackathon 2024</h3>
-                        <p className="text-gray-600 dark:text-gray-400">Advanced to the national semi-final round after qualifying in the internal hackathon</p>
+                        <h3 className="font-semibold text-gray-900 dark:text-white" style={{ fontFamily: '"Poppins", sans-serif' }}>Smart India Hackathon 2024</h3>
+                        <p className="text-gray-600 dark:text-gray-400" style={{ fontFamily: '"Poppins", sans-serif' }}>Advanced to the national semi-final round after qualifying in the internal hackathon</p>
                       </div>
                     </div>
                   </CardContent>
@@ -1358,7 +1604,7 @@ const Portfolio = () => {
             viewport={{ once: true }}
             transition={{ duration: 0.8, ease: [0.25, 0.46, 0.45, 0.94] }}
           >
-            <h2 className="text-3xl font-bold text-center mb-12 text-gray-900 dark:text-white">Certifications</h2>
+            <h2 className="text-3xl font-bold text-center mb-12 text-gray-900 dark:text-white" style={{ fontFamily: '"JetBrains Mono", monospace' }}>Certifications</h2>
             <motion.div
               whileHover={{ scale: 1.02 }}
               transition={{ type: "spring", stiffness: 200, damping: 20 }}
@@ -1384,8 +1630,8 @@ const Portfolio = () => {
     </path>
   </svg>
 </span>                    <div>
-                      <h3 className="font-semibold text-gray-900 dark:text-white">Google Data Analytics Specialization</h3>
-                      <p className="text-gray-600 dark:text-gray-400">Google</p>
+                      <h3 className="font-semibold text-gray-900 dark:text-white" style={{ fontFamily: '"Poppins", sans-serif' }}>Google Data Analytics Specialization</h3>
+                      <p className="text-gray-600 dark:text-gray-400" style={{ fontFamily: '"Poppins", sans-serif' }}>Google</p>
                     </div>
                   </div>
                 </CardContent>
@@ -1404,7 +1650,7 @@ const Portfolio = () => {
             viewport={{ once: true }}
             transition={{ duration: 0.8, ease: [0.25, 0.46, 0.45, 0.94] }}
           >
-            <h2 className="text-3xl font-bold text-center mb-8 text-gray-900 dark:text-white">Want to Hire?</h2>
+            <h2 className="text-3xl font-bold text-center mb-8 text-gray-900 dark:text-white" style={{ fontFamily: '"JetBrains Mono", monospace' }}>Want to Hire?</h2>
             <AnimatedPrinter onComplete={() => setResumeOpen(true)} />
           </motion.div>
         </div>
@@ -1419,7 +1665,7 @@ const Portfolio = () => {
       viewport={{ once: true }}
       transition={{ duration: 0.8, ease: [0.25, 0.46, 0.45, 0.94] }}
     >
-      <h2 className="text-3xl font-bold text-center mb-12 text-gray-900 dark:text-white">
+      <h2 className="text-3xl font-bold text-center mb-12 text-gray-900 dark:text-white" style={{ fontFamily: '"JetBrains Mono", monospace' }}>
         Here, When You Need Me.
       </h2>
 
@@ -1430,21 +1676,21 @@ const Portfolio = () => {
           <div className="flex flex-col justify-center h-full space-y-6 pl-6">
             <div className="flex items-center gap-3">
               <FaEnvelope className="w-5 h-5 text-yellow-500" />
-              <span className="text-gray-700 dark:text-gray-300">
+              <span className="text-gray-700 dark:text-gray-300" style={{ fontFamily: '"Poppins", sans-serif' }}>
                 yaswanthkuramdasu@gmail.com
               </span>
             </div>
 
             <div className="flex items-center gap-3">
               <FaPhone className="w-5 h-5 text-red-500" />
-              <span className="text-gray-700 dark:text-gray-300">
+              <span className="text-gray-700 dark:text-gray-300" style={{ fontFamily: '"Poppins", sans-serif' }}>
                 +91 82970 31456
               </span>
             </div>
 
             <div className="flex items-center gap-3">
               <FaMapMarkerAlt className="w-5 h-5 text-green-500" />
-              <span className="text-gray-700 dark:text-gray-300">
+              <span className="text-gray-700 dark:text-gray-300" style={{ fontFamily: '"Poppins", sans-serif' }}>
                 Visakhapatnam, Andhra Pradesh
               </span>
             </div>
@@ -1456,6 +1702,7 @@ const Portfolio = () => {
                 target="_blank"
                 rel="noopener noreferrer"
                 className="text-gray-700 dark:text-gray-300 hover:underline"
+                style={{ fontFamily: '"Poppins", sans-serif' }}
               >
                 Chat on WhatsApp
               </a>
@@ -1468,6 +1715,7 @@ const Portfolio = () => {
                 target="_blank"
                 rel="noopener noreferrer"
                 className="text-gray-700 dark:text-gray-300 hover:underline"
+                style={{ fontFamily: '"Poppins", sans-serif' }}
               >
                 Connect on LinkedIn
               </a>
