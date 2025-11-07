@@ -19,29 +19,32 @@ const AnimatedPrinter: React.FC<AnimatedPrinterProps> = ({ onComplete }) => {
     // Start paper sliding after printer compression
     setTimeout(() => {
       setPaperSliding(true);
-    }, 800);
+    }, 1000);
     
     // Start printing animation
     setTimeout(() => {
       setShowPrinting(true);
-    }, 1500);
+    }, 2000);
     
-    // Call onComplete after printing completes
+    // Open resume shortly after printing starts
     setTimeout(() => {
       if (onComplete) {
         onComplete();
       }
-      // Reset animation state
+    }, 3500);
+
+    // Reset animation state after printing completes
+    setTimeout(() => {
       setIsAnimating(false);
       setPaperSliding(false);
       setShowPrinting(false);
-    }, 4000);
+    }, 5500);
   };
 
   return (
     <>
       {/* Main Container */}
-      <div className="min-h-[50vh] flex items-center justify-center relative overflow-hidden">
+      <div className="w-full h-full flex items-center justify-center relative overflow-visible">
         
         {/* 3D Printer */}
         <div 

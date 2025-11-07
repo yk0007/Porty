@@ -261,6 +261,8 @@ const Portfolio = () => {
   const [scrollY, setScrollY] = useState(0);
   const mainContentRef = useRef<HTMLDivElement>(null);
   const [currentRoleIndex, setCurrentRoleIndex] = useState(0);
+  const [showNameInGrid, setShowNameInGrid] = useState(false);
+  const bentoSectionRef = useRef<HTMLElement | null>(null);
   
   const roles = [
     'AI ENGINEER',
@@ -352,6 +354,12 @@ const Portfolio = () => {
       const totalHeight = document.documentElement.scrollHeight - window.innerHeight;
       const progress = (window.scrollY / totalHeight) * 100;
       setScrollProgress(progress);
+
+      if (bentoSectionRef.current) {
+        const rect = bentoSectionRef.current.getBoundingClientRect();
+        const triggerPosition = window.innerHeight * 0.4;
+        setShowNameInGrid(rect.top <= triggerPosition);
+      }
     };
 
     window.addEventListener('scroll', handleScroll);
@@ -933,9 +941,13 @@ const Portfolio = () => {
                 {showGreeting}
               </motion.div>
             <motion.div
-                initial={{ opacity: 0 }}
-                animate={{ opacity: startCipher ? 1 : 0 }}
-                transition={{ duration: 0.3 }}
+                initial={{ opacity: 0, scale: 1, y: 0 }}
+                animate={{
+                  opacity: startCipher ? (showNameInGrid ? 0 : 1) : 0,
+                  scale: showNameInGrid ? 0.75 : 1,
+                  y: showNameInGrid ? -20 : 0
+                }}
+                transition={{ duration: 0.4, ease: [0.25, 0.46, 0.45, 0.94] }}
                 className="tracking-wider text-center leading-tight"
                 style={{ 
                   fontSize: 'clamp(2rem, 8vw, 4rem)',
@@ -1084,7 +1096,7 @@ const Portfolio = () => {
       </section>
 
       {/* Bento Grid Section - Desktop Only */}
-      <section className="hidden lg:block py-12 bg-transparent">
+      <section ref={(el) => (bentoSectionRef.current = el)} className="hidden lg:block py-12 bg-transparent">
         <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 auto-rows-[minmax(220px,auto)]">
             
@@ -1094,12 +1106,12 @@ const Portfolio = () => {
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
               transition={{ duration: 0.6 }}
-              className="lg:col-span-1 lg:row-span-2 rounded-2xl p-6 bg-gradient-to-br from-gray-200 to-gray-300 dark:from-gray-700 dark:to-gray-800 shadow-xl hover:shadow-2xl transition-all duration-300"
+              className="lg:col-span-1 lg:row-span-2 rounded-2xl p-6 bg-gradient-to-br from-slate-200 to-slate-300 dark:from-slate-700 dark:to-slate-900 shadow-xl hover:shadow-2xl transition-all duration-300 transform-gpu hover:-translate-y-1 hover:scale-[1.01] flex flex-col"
             >
               <h3 className="text-xl font-bold mb-4 text-gray-900 dark:text-white" style={{ fontFamily: '"JetBrains Mono", monospace' }}>
                 About Me
               </h3>
-              <div className="space-y-3">
+              <div className="space-y-3 flex-1 flex flex-col justify-start">
                 {aboutPoints.map((point, index) => (
                   <motion.div
                     key={index}
@@ -1123,12 +1135,12 @@ const Portfolio = () => {
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
               transition={{ duration: 0.6, delay: 0.1 }}
-              className="lg:col-span-2 lg:row-span-1 rounded-2xl p-6 bg-gradient-to-br from-gray-200 to-gray-300 dark:from-gray-700 dark:to-gray-800 shadow-xl hover:shadow-2xl transition-all duration-300"
+              className="lg:col-span-2 lg:row-span-1 rounded-2xl p-6 bg-gradient-to-br from-indigo-200 to-indigo-300 dark:from-indigo-700 dark:to-indigo-900 shadow-xl hover:shadow-2xl transition-all duration-300 transform-gpu hover:-translate-y-1 hover:scale-[1.01] flex flex-col"
             >
               <h3 className="text-xl font-bold mb-4 text-gray-900 dark:text-white" style={{ fontFamily: '"JetBrains Mono", monospace' }}>
                 Education
               </h3>
-              <div className="space-y-4">
+              <div className="space-y-4 flex-1 flex flex-col justify-start">
                 <div className="flex items-start gap-3">
                   <FaGraduationCap className="w-6 h-6 text-gray-900 dark:text-white mt-1" />
                   <div>
@@ -1141,32 +1153,30 @@ const Portfolio = () => {
                     </p>
                     <div className="flex items-center gap-2 flex-wrap">
                       <span className="text-sm text-gray-900 dark:text-white font-medium" style={{ fontFamily: '"Poppins", sans-serif' }}>
-                        CGPA: 8.94 / 10.0
+                        CGPA: 8.85 / 10.0
                       </span>
                       <Badge variant="secondary" className="bg-gray-600 text-white dark:bg-gray-700 text-xs px-2.5 py-0.5">
                         Current
                       </Badge>
                     </div>
+                    <p className="text-xs text-gray-700 dark:text-gray-300" style={{ fontFamily: '"Poppins", sans-serif' }}>
+                      Currently in final year
+                    </p>
                   </div>
                 </div>
               </div>
             </motion.div>
 
-            {/* Summary Card - Green Card (Middle-left) */}
+            {/* Printer Component Card */}
             <motion.div
               initial={{ opacity: 0, y: 40 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
               transition={{ duration: 0.6, delay: 0.2 }}
-              className="lg:col-span-1 lg:row-span-1 rounded-2xl p-6 bg-gradient-to-br from-gray-200 to-gray-300 dark:from-gray-700 dark:to-gray-800 shadow-xl hover:shadow-2xl transition-all duration-300"
+              className="lg:col-span-1 lg:row-span-1 overflow-visible bg-transparent justify-self-center self-end"
             >
-              <div className="flex flex-col justify-center h-full">
-                <h3 className="text-lg font-bold mb-3 text-gray-900 dark:text-white" style={{ fontFamily: '"JetBrains Mono", monospace' }}>
-                  Quick Summary
-                </h3>
-                <p className="text-sm text-gray-900 dark:text-white leading-relaxed" style={{ fontFamily: '"Poppins", sans-serif' }}>
-                  AI/ML Engineer passionate about building intelligent systems with LLMs, AI agents, and GenAI applications
-                </p>
+              <div className="relative z-10 pointer-events-auto flex items-center justify-center h-full scale-[0.9] py-0">
+                <AnimatedPrinter onComplete={() => setResumeOpen(true)} />
               </div>
             </motion.div>
 
@@ -1176,12 +1186,12 @@ const Portfolio = () => {
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
               transition={{ duration: 0.6, delay: 0.3 }}
-              className="lg:col-span-1 lg:row-span-1 rounded-2xl p-6 bg-gradient-to-br from-gray-200 to-gray-300 dark:from-gray-700 dark:to-gray-800 shadow-xl hover:shadow-2xl transition-all duration-300"
+              className="lg:col-span-1 lg:row-span-1 rounded-2xl p-6 bg-gradient-to-br from-sky-200 to-sky-300 dark:from-sky-700 dark:to-sky-900 shadow-xl hover:shadow-2xl transition-all duration-300 transform-gpu hover:-translate-y-1 hover:scale-[1.01] flex flex-col"
             >
               <h3 className="text-lg font-bold mb-4 text-gray-900 dark:text-white" style={{ fontFamily: '"JetBrains Mono", monospace' }}>
                 Certifications
               </h3>
-              <div className="space-y-3">
+              <div className="space-y-3 flex-1 flex flex-col justify-start">
                 <div className="flex items-start gap-3">
                   <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 48 48" className="w-8 h-8 flex-shrink-0">
                     <path fill="#FFC107" d="M43.611,20.083H42V20H24v8h11.303c-1.649,4.657-6.08,8-11.303,8c-6.627,0-12-5.373-12-12c0-6.627,5.373-12,12-12c3.059,0,5.842,1.154,7.961,3.039l5.657-5.657C34.046,6.053,29.268,4,24,4C12.955,4,4,12.955,4,24c0,11.045,8.955,20,20,20c11.045,0,20-8.955,20-20C44,22.659,43.862,21.35,43.611,20.083z"/>
@@ -1210,9 +1220,9 @@ const Portfolio = () => {
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
               transition={{ duration: 0.6, delay: 0.4 }}
-              className="lg:col-span-2 lg:row-span-1 rounded-2xl p-6 bg-gradient-to-br from-gray-200 to-gray-300 dark:from-gray-700 dark:to-gray-800 shadow-xl hover:shadow-2xl transition-all duration-300"
+              className="lg:col-span-2 lg:row-span-1 rounded-2xl p-6 bg-gradient-to-br from-orange-200 to-orange-300 dark:from-orange-700 dark:to-orange-900 shadow-xl hover:shadow-2xl transition-all duration-300 transform-gpu hover:-translate-y-1 hover:scale-[1.01] flex flex-col"
             >
-              <div className="flex items-start gap-4">
+              <div className="flex items-start gap-4 flex-1 flex-col justify-start">
                 <FaBriefcase className="w-6 h-6 text-gray-900 dark:text-white mt-1" />
                 <div className="flex-1">
                   <h3 className="text-lg font-bold mb-2 text-gray-900 dark:text-white" style={{ fontFamily: '"JetBrains Mono", monospace' }}>
@@ -1251,12 +1261,12 @@ const Portfolio = () => {
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
               transition={{ duration: 0.6, delay: 0.5 }}
-              className="lg:col-span-1 lg:row-span-1 rounded-2xl p-6 bg-gradient-to-br from-gray-200 to-gray-300 dark:from-gray-700 dark:to-gray-800 shadow-xl hover:shadow-2xl transition-all duration-300"
+              className="lg:col-span-1 lg:row-span-1 rounded-2xl p-6 bg-gradient-to-br from-amber-200 to-amber-300 dark:from-amber-700 dark:to-amber-900 shadow-xl hover:shadow-2xl transition-all duration-300 transform-gpu hover:-translate-y-1 hover:scale-[1.01] flex flex-col"
             >
               <h3 className="text-lg font-bold mb-3 text-gray-900 dark:text-white" style={{ fontFamily: '"JetBrains Mono", monospace' }}>
                 Achievements
               </h3>
-              <div className="space-y-2.5">
+              <div className="space-y-2.5 flex-1 flex flex-col justify-start">
                 <div className="flex items-start gap-2.5">
                   <FaTrophy className="w-5 h-5 text-gray-900 dark:text-white mt-0.5 flex-shrink-0" />
                   <div>
@@ -1653,8 +1663,8 @@ const Portfolio = () => {
         </div>
       </section>
 
-      {/* Resume Section */}
-      <section id="resume" className="py-10">
+      {/* Resume Section - Hidden */}
+      <section id="resume" className="hidden py-10">
         <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
           <motion.div
             initial={{ opacity: 0, y: 40 }}

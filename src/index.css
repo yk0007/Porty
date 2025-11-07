@@ -352,6 +352,16 @@
   /* Smooth scrolling */
   html {
     scroll-behavior: smooth;
+    scroll-padding-top: 80px; /* Account for fixed navbar */
+  }
+  
+  body {
+    scroll-behavior: smooth;
+  }
+  
+  /* Smooth scrolling for all scrollable elements */
+  * {
+    scroll-behavior: smooth;
   }
 }
 .risque-regular {
