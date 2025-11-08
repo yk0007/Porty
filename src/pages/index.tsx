@@ -1374,12 +1374,11 @@ const Portfolio = () => {
                     </div>
                   </div>
                 </CardHeader>
-                <CardContent>
                   <div className="flex justify-between items-center">
-                    <span className="text-gray-600 dark:text-gray-400" style={{ fontFamily: '"Poppins", sans-serif' }}>CGPA: 8.94 / 10.0</span>
+                    <span className="text-gray-600 dark:text-gray-400" style={{ fontFamily: '"Poppins", sans-serif' }}>CGPA: 8.85 / 10.0</span>
                     <Badge variant="secondary" className="bg-blue-100 text-blue-800 dark:bg-blue-900 dark:text-blue-200">Current</Badge>
                   </div>
-                </CardContent>
+                  <p className="text-gray-600 dark:text-gray-400 mt-2" style={{ fontFamily: '"Poppins", sans-serif' }}>Currently in final year</p>
               </Card>
             </motion.div>
           </motion.div>
@@ -1579,6 +1578,23 @@ const Portfolio = () => {
           >
             <h2 className="text-3xl font-bold text-center mb-12 text-gray-900 dark:text-white" style={{ fontFamily: '"JetBrains Mono", monospace' }}>Achievements & Awards</h2>
             <div className="space-y-4">
+              <motion.div
+                whileHover={{ scale: 1.02 }}
+                transition={{ type: "spring", stiffness: 200, damping: 20 }}
+              >
+                <Card className="rounded-3xl shadow-md hover:shadow-lg transition-all duration-300 bg-white dark:bg-gray-800/50 border border-gray-200 dark:border-gray-700">
+                  <CardContent className="p-6">
+                    <div className="flex items-start gap-3">
+                      <FaTrophy className="w-6 h-6 text-yellow-500 dark:text-yellow-400 mt-1" />
+                      <div>
+                        <h3 className="font-semibold text-gray-900 dark:text-white" style={{ fontFamily: '"Poppins", sans-serif' }}>CodeChef 3 Star Rating</h3>
+                        <p className="text-gray-600 dark:text-gray-400" style={{ fontFamily: '"Poppins", sans-serif' }}>Achieved 3-star rating on CodeChef competitive programming platform</p>
+                      </div>
+                    </div>
+                  </CardContent>
+                </Card>
+              </motion.div>
+              
               <motion.div
                 whileHover={{ scale: 1.02 }}
                 transition={{ type: "spring", stiffness: 200, damping: 20 }}
