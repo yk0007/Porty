@@ -1,11 +1,11 @@
 {
-  "name": "Portfolio",
-  "short_name": "Portfolio",
-  "description": "Portfolio Application",
+  "name": "Yaswanth Kuramdasu - AI Engineer & Full Stack Developer",
+  "short_name": "Yaswanth Portfolio",
+  "description": "AI/ML Engineer crafting LLMs, AI agents, and GenAI applications. Full Stack Developer with expertise in Python, React, and modern web technologies.",
   "start_url": "/",
   "display": "standalone",
-  "background_color": "#000000",
-  "theme_color": "#000000",
+  "background_color": "#ffffff",
+  "theme_color": "#3b82f6",
   "icons": [
     {
       "src": "/favicon/android-chrome-192x192.png",

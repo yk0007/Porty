@@ -38,59 +38,61 @@ import { GridPattern } from '@/components/ui/grid-pattern';
 const useCipherTyping = (targetText: string, shouldStart: boolean) => {
   const [displayText, setDisplayText] = useState('');
   const [decryptedFlags, setDecryptedFlags] = useState<boolean[]>([]);
-  const [currentIndex, setCurrentIndex] = useState(0);
+  const [currentIndex] = useState(0);
   const [isComplete, setIsComplete] = useState(false);
-  const animationRef = useRef<number>();
-  const frameCountRef = useRef(0);
+  const intervalRef = useRef<number>();
+  const startTimeRef = useRef<number | null>(null);
 
   useEffect(() => {
     if (!shouldStart || isComplete) return;
 
     const chars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789!@#$%^&*()';
-    const animate = () => {
-      frameCountRef.current++;
 
-      if (frameCountRef.current % 2 === 0) {
-        if (currentIndex < targetText.length) {
-          let newDisplayText = '';
-          const newFlags: boolean[] = [];
+    // Ensure something is visible immediately
+    if (displayText.length === 0) {
+      const placeholder = Array.from({ length: targetText.length }, () => chars[Math.floor(Math.random() * chars.length)]).join('');
+      setDisplayText(placeholder);
+      setDecryptedFlags(Array(targetText.length).fill(false));
+    }
 
-          for (let i = 0; i < currentIndex; i++) {
-            newDisplayText += targetText[i];
-            newFlags.push(true);
-          }
-          const shouldLock = Math.random() < 0.08;
-          if (shouldLock || frameCountRef.current > (currentIndex + 1) * 40) {
-            newDisplayText += targetText[currentIndex];
-            newFlags.push(true);
-            setCurrentIndex(prev => prev + 1);
-          } else {
-            const randChar = chars[Math.floor(Math.random() * chars.length)];
-            newDisplayText += randChar;
-            newFlags.push(false);
-          }
-          for (let i = currentIndex + 1; i < targetText.length; i++) {
-            const randChar = chars[Math.floor(Math.random() * chars.length)];
-            newDisplayText += randChar;
-            newFlags.push(false);
-          }
-          setDisplayText(newDisplayText);
-          setDecryptedFlags(newFlags);
+    if (startTimeRef.current === null) {
+      startTimeRef.current = typeof performance !== 'undefined' ? performance.now() : Date.now();
+    }
+
+    const charDurationMs = 120; // time per character
+    const tick = () => {
+      const now = typeof performance !== 'undefined' ? performance.now() : Date.now();
+      const elapsed = now - (startTimeRef.current as number);
+      const lockedCount = Math.min(targetText.length, Math.floor(elapsed / charDurationMs));
+
+      let newDisplayText = '';
+      const newFlags: boolean[] = [];
+      for (let i = 0; i < targetText.length; i++) {
+        if (i < lockedCount) {
+          newDisplayText += targetText[i];
+          newFlags.push(true);
         } else {
-          setDisplayText(targetText);
-          setDecryptedFlags(Array(targetText.length).fill(true));
-          setIsComplete(true);
+          const randChar = chars[Math.floor(Math.random() * chars.length)];
+          newDisplayText += randChar;
+          newFlags.push(false);
         }
       }
-      animationRef.current = requestAnimationFrame(animate);
-    };
-    animationRef.current = requestAnimationFrame(animate);
-    return () => {
-      if (animationRef.current) {
-        cancelAnimationFrame(animationRef.current);
+      setDisplayText(newDisplayText);
+      setDecryptedFlags(newFlags);
+
+      if (lockedCount >= targetText.length) {
+        setIsComplete(true);
+        if (intervalRef.current) window.clearInterval(intervalRef.current);
       }
     };
-  }, [targetText, shouldStart, currentIndex, isComplete]);
+    tick();
+    intervalRef.current = window.setInterval(tick, 80);
+    return () => {
+      if (intervalRef.current) {
+        window.clearInterval(intervalRef.current);
+      }
+    };
+  }, [targetText, shouldStart, isComplete, displayText.length]);
   return { displayText, decryptedFlags, isComplete };
 };
 
@@ -263,6 +265,7 @@ const Portfolio = () => {
   const [currentRoleIndex, setCurrentRoleIndex] = useState(0);
   const [showNameInGrid, setShowNameInGrid] = useState(false);
   const bentoSectionRef = useRef<HTMLElement | null>(null);
+  const [isDesktop, setIsDesktop] = useState(false);
   
   const roles = [
     'AI ENGINEER',
@@ -358,16 +361,37 @@ const Portfolio = () => {
       if (bentoSectionRef.current) {
         const rect = bentoSectionRef.current.getBoundingClientRect();
         const triggerPosition = window.innerHeight * 0.4;
-        setShowNameInGrid(rect.top <= triggerPosition);
+        const shouldShowInGrid = isDesktop && rect.top <= triggerPosition;
+        // Keep hero cipher independent of scroll; do not restart based on scroll
+        
+        setShowNameInGrid(shouldShowInGrid);
       }
     };
 
     window.addEventListener('scroll', handleScroll);
     return () => window.removeEventListener('scroll', handleScroll);
+  }, [showNameInGrid, isDesktop]);
+
+  // Keep track of desktop vs mobile (Tailwind lg breakpoint ~1024px)
+  useEffect(() => {
+    const mq = window.matchMedia('(min-width: 1024px)');
+    const update = () => setIsDesktop(mq.matches);
+    update();
+    if (mq.addEventListener) mq.addEventListener('change', update);
+    else mq.addListener(update);
+    return () => {
+      if (mq.removeEventListener) mq.removeEventListener('change', update);
+      else mq.removeListener(update);
+    };
   }, []);
 
   useEffect(() => {
     setIsClient(true);
+  }, []);
+
+  // Ensure cipher starts immediately regardless of scroll or greeting state
+  useEffect(() => {
+    setStartCipher(true);
   }, []);
 
   useEffect(() => {
@@ -394,6 +418,12 @@ const Portfolio = () => {
       }, 1000);
     }
   }, [mounted]);
+
+  // Fallback: ensure cipher starts regardless of greeting/scroll
+  useEffect(() => {
+    const t = setTimeout(() => setStartCipher(true), 1800);
+    return () => clearTimeout(t);
+  }, []);
 
   // Role carousel effect
   useEffect(() => {
@@ -943,9 +973,10 @@ const Portfolio = () => {
             <motion.div
                 initial={{ opacity: 0, scale: 1, y: 0 }}
                 animate={{
-                  opacity: startCipher ? (showNameInGrid ? 0 : 1) : 0,
-                  scale: showNameInGrid ? 0.75 : 1,
-                  y: showNameInGrid ? -20 : 0
+                  // Always visible on mobile; on desktop, hide when name enters grid
+                  opacity: isDesktop ? (startCipher && !showNameInGrid ? 1 : 0) : 1,
+                  scale: 1,
+                  y: 0
                 }}
                 transition={{ duration: 0.4, ease: [0.25, 0.46, 0.45, 0.94] }}
                 className="tracking-wider text-center leading-tight"
@@ -1316,7 +1347,7 @@ const Portfolio = () => {
             viewport={{ once: true }}
             transition={{ duration: 0.8, ease: [0.25, 0.46, 0.45, 0.94] }}
           >
-            <h2 className="text-3xl font-bold text-center mb-12 text-gray-900 dark:text-white" style={{ fontFamily: '"JetBrains Mono", monospace' }}>About Me</h2>
+            <h2 className="text-2xl font-bold text-center mb-12 text-gray-900 dark:text-white" style={{ fontFamily: '"JetBrains Mono", monospace' }}>About Me</h2>
             <motion.div
               whileHover={{ scale: 1.02 }}
               transition={{ type: "spring", stiffness: 200, damping: 20 }}
@@ -1335,7 +1366,7 @@ const Portfolio = () => {
                           duration: 0.6,
                           ease: [0.25, 0.46, 0.45, 0.94]
                         }}
-                        className="text-lg text-gray-700 dark:text-gray-300 flex items-center"
+                        className="text-base text-gray-700 dark:text-gray-300 flex items-center"
                         style={{ fontFamily: '"Poppins", sans-serif' }}
                       >
                         <span className="mr-3 text-blue-600 dark:text-blue-400">•</span>
@@ -1359,7 +1390,7 @@ const Portfolio = () => {
             viewport={{ once: true }}
             transition={{ duration: 0.8, ease: [0.25, 0.46, 0.45, 0.94] }}
           >
-            <h2 className="text-3xl font-bold text-center mb-12 text-gray-900 dark:text-white" style={{ fontFamily: '"JetBrains Mono", monospace' }}>Education</h2>
+            <h2 className="text-2xl font-bold text-center mb-12 text-gray-900 dark:text-white" style={{ fontFamily: '"JetBrains Mono", monospace' }}>Education</h2>
             <motion.div
               whileHover={{ scale: 1.02 }}
               transition={{ type: "spring", stiffness: 200, damping: 20 }}
@@ -1369,16 +1400,18 @@ const Portfolio = () => {
                   <div className="flex items-center gap-3">
                     <FaGraduationCap className="w-6 h-6 text-blue-500 dark:text-blue-400 drop-shadow-sm" />
                     <div>
-                      <CardTitle className="text-gray-900 dark:text-white" style={{ fontFamily: '"Poppins", sans-serif' }}>Bachelor of Technology, CSE (Artificial Intelligence)</CardTitle>
-                      <CardDescription className="text-gray-600 dark:text-gray-400" style={{ fontFamily: '"Poppins", sans-serif' }}>Vignan's Institute Of Information Technology</CardDescription>
+                      <CardTitle className="text-sm text-gray-900 dark:text-white" style={{ fontFamily: '"Poppins", sans-serif' }}>Bachelor of Technology, CSE (Artificial Intelligence)</CardTitle>
+                      <CardDescription className="text-xs text-gray-600 dark:text-gray-400" style={{ fontFamily: '"Poppins", sans-serif' }}>Vignan's Institute Of Information Technology</CardDescription>
                     </div>
                   </div>
                 </CardHeader>
-                  <div className="flex justify-between items-center">
-                    <span className="text-gray-600 dark:text-gray-400" style={{ fontFamily: '"Poppins", sans-serif' }}>CGPA: 8.85 / 10.0</span>
-                    <Badge variant="secondary" className="bg-blue-100 text-blue-800 dark:bg-blue-900 dark:text-blue-200">Current</Badge>
+                <CardContent>
+                  <div className="flex justify-between items-center mb-2">
+                    <span className="text-xs text-gray-600 dark:text-gray-400" style={{ fontFamily: '"Poppins", sans-serif' }}>CGPA: 8.85 / 10.0</span>
+                    <Badge variant="secondary" className="bg-blue-100 text-blue-800 dark:bg-blue-900 dark:text-blue-200 text-xs">Current</Badge>
                   </div>
-                  <p className="text-gray-600 dark:text-gray-400 mt-2" style={{ fontFamily: '"Poppins", sans-serif' }}>Currently in final year</p>
+                  <p className="text-xs text-gray-600 dark:text-gray-400" style={{ fontFamily: '"Poppins", sans-serif' }}>Currently in final year</p>
+                </CardContent>
               </Card>
             </motion.div>
           </motion.div>
@@ -1394,7 +1427,7 @@ const Portfolio = () => {
             viewport={{ once: true }}
             transition={{ duration: 0.8, ease: [0.25, 0.46, 0.45, 0.94] }}
           >
-            <h2 className="text-3xl font-bold text-center mb-12 text-gray-900 dark:text-white" style={{ fontFamily: '"JetBrains Mono", monospace' }}>Experience</h2>
+            <h2 className="text-2xl font-bold text-center mb-12 text-gray-900 dark:text-white" style={{ fontFamily: '"JetBrains Mono", monospace' }}>Experience</h2>
             <motion.div
               whileHover={{ scale: 1.02 }}
               transition={{ type: "spring", stiffness: 200, damping: 20 }}
@@ -1404,8 +1437,8 @@ const Portfolio = () => {
                   <div className="flex items-center gap-3">
                     <FaBriefcase className="w-6 h-6 text-purple-800 dark:text-purple-400 drop-shadow-sm" />
                     <div>
-                      <CardTitle className="text-gray-900 dark:text-white" style={{ fontFamily: '"Poppins", sans-serif' }}>AI&ML Research Internship</CardTitle>
-                      <CardDescription className="text-gray-600 dark:text-gray-400" style={{ fontFamily: '"Poppins", sans-serif' }}>Indian Institute of Information Technology, Allahabad (IIITA)</CardDescription>
+                      <CardTitle className="text-sm text-gray-900 dark:text-white" style={{ fontFamily: '"Poppins", sans-serif' }}>AI&ML Research Internship</CardTitle>
+                      <CardDescription className="text-xs text-gray-600 dark:text-gray-400" style={{ fontFamily: '"Poppins", sans-serif' }}>Indian Institute of Information Technology, Allahabad (IIITA)</CardDescription>
                     </div>
                   </div>
                 </CardHeader>
@@ -1414,7 +1447,7 @@ const Portfolio = () => {
                     <Badge variant="outline" className="border-blue-300 text-blue-700 dark:border-blue-600 dark:text-blue-400">May 2024 - July 2024</Badge>
                     <span className="ml-2 text-gray-600 dark:text-gray-400" style={{ fontFamily: '"Poppins", sans-serif' }}></span>
                   </div>
-                  <ul className="space-y-2 text-gray-700 dark:text-gray-300" style={{ fontFamily: '"Poppins", sans-serif' }}>
+                  <ul className="space-y-2 text-sm text-gray-700 dark:text-gray-300" style={{ fontFamily: '"Poppins", sans-serif' }}>
                   <li>Developed a multimodal summarization system to extract key clinical information from Hinglish medical queries and images.</li>
                   <li>Utilized transformer-based LLMs and PEFT techniques (QLoRA) for efficient fine-tuning on limited hardware.</li>
                   <li>Enhanced factual accuracy by fusing visual and textual embeddings, improving summarization quality and context.</li>
@@ -1509,7 +1542,7 @@ const Portfolio = () => {
             viewport={{ once: true }}
             transition={{ duration: 0.8, ease: [0.25, 0.46, 0.45, 0.94] }}
           >
-            <h2 className="text-3xl font-bold text-center mb-12 text-black dark:text-white" style={{ fontFamily: '"JetBrains Mono", monospace' }}>Projects</h2>
+            <h2 className="text-2xl font-bold text-center mb-12 text-black dark:text-white" style={{ fontFamily: '"JetBrains Mono", monospace' }}>Projects</h2>
             <div className="grid md:grid-cols-2 gap-6">
               {projects.map((project, index) => (
                 <motion.div
@@ -1576,7 +1609,7 @@ const Portfolio = () => {
             viewport={{ once: true }}
             transition={{ duration: 0.8, ease: [0.25, 0.46, 0.45, 0.94] }}
           >
-            <h2 className="text-3xl font-bold text-center mb-12 text-gray-900 dark:text-white" style={{ fontFamily: '"JetBrains Mono", monospace' }}>Achievements & Awards</h2>
+            <h2 className="text-2xl font-bold text-center mb-12 text-gray-900 dark:text-white" style={{ fontFamily: '"JetBrains Mono", monospace' }}>Achievements & Awards</h2>
             <div className="space-y-4">
               <motion.div
                 whileHover={{ scale: 1.02 }}
@@ -1587,8 +1620,8 @@ const Portfolio = () => {
                     <div className="flex items-start gap-3">
                       <FaTrophy className="w-6 h-6 text-yellow-500 dark:text-yellow-400 mt-1" />
                       <div>
-                        <h3 className="font-semibold text-gray-900 dark:text-white" style={{ fontFamily: '"Poppins", sans-serif' }}>CodeChef 3 Star Rating</h3>
-                        <p className="text-gray-600 dark:text-gray-400" style={{ fontFamily: '"Poppins", sans-serif' }}>Achieved 3-star rating on CodeChef competitive programming platform</p>
+                        <h3 className="text-sm font-semibold text-gray-900 dark:text-white" style={{ fontFamily: '"Poppins", sans-serif' }}>CodeChef 3 Star Rating</h3>
+                        <p className="text-xs text-gray-600 dark:text-gray-400" style={{ fontFamily: '"Poppins", sans-serif' }}>Achieved 3-star rating on CodeChef competitive programming platform</p>
                       </div>
                     </div>
                   </CardContent>
@@ -1604,8 +1637,8 @@ const Portfolio = () => {
                     <div className="flex items-start gap-3">
                       <FaTrophy className="w-6 h-6 text-yellow-500 dark:text-yellow-400 mt-1" />
                       <div>
-                        <h3 className="font-semibold text-gray-900 dark:text-white" style={{ fontFamily: '"Poppins", sans-serif' }}>Eureka! 2024, IIT Bombay</h3>
-                        <p className="text-gray-600 dark:text-gray-400" style={{ fontFamily: '"Poppins", sans-serif' }}>Qualified the Zonal Round and advanced to the Final Round Pitching of Asia's largest B-Model competition</p>
+                        <h3 className="text-sm font-semibold text-gray-900 dark:text-white" style={{ fontFamily: '"Poppins", sans-serif' }}>Eureka! 2024, IIT Bombay</h3>
+                        <p className="text-xs text-gray-600 dark:text-gray-400" style={{ fontFamily: '"Poppins", sans-serif' }}>Qualified the Zonal Round and advanced to the Final Round Pitching of Asia's largest B-Model competition</p>
                       </div>
                     </div>
                   </CardContent>
@@ -1621,8 +1654,8 @@ const Portfolio = () => {
                     <div className="flex items-start gap-3">
                       <FaTrophy className="w-6 h-6 text-yellow-500 dark:text-yellow-400 mt-1" />
                       <div>
-                        <h3 className="font-semibold text-gray-900 dark:text-white" style={{ fontFamily: '"Poppins", sans-serif' }}>Smart India Hackathon 2024</h3>
-                        <p className="text-gray-600 dark:text-gray-400" style={{ fontFamily: '"Poppins", sans-serif' }}>Advanced to the national semi-final round after qualifying in the internal hackathon</p>
+                        <h3 className="text-sm font-semibold text-gray-900 dark:text-white" style={{ fontFamily: '"Poppins", sans-serif' }}>Smart India Hackathon 2024</h3>
+                        <p className="text-xs text-gray-600 dark:text-gray-400" style={{ fontFamily: '"Poppins", sans-serif' }}>Advanced to the national semi-final round after qualifying in the internal hackathon</p>
                       </div>
                     </div>
                   </CardContent>
@@ -1642,7 +1675,7 @@ const Portfolio = () => {
             viewport={{ once: true }}
             transition={{ duration: 0.8, ease: [0.25, 0.46, 0.45, 0.94] }}
           >
-            <h2 className="text-3xl font-bold text-center mb-12 text-gray-900 dark:text-white" style={{ fontFamily: '"JetBrains Mono", monospace' }}>Certifications</h2>
+            <h2 className="text-2xl font-bold text-center mb-12 text-gray-900 dark:text-white" style={{ fontFamily: '"JetBrains Mono", monospace' }}>Certifications</h2>
             <motion.div
               whileHover={{ scale: 1.02 }}
               transition={{ type: "spring", stiffness: 200, damping: 20 }}
@@ -1668,8 +1701,8 @@ const Portfolio = () => {
     </path>
   </svg>
 </span>                    <div>
-                      <h3 className="font-semibold text-gray-900 dark:text-white" style={{ fontFamily: '"Poppins", sans-serif' }}>Google Data Analytics Specialization</h3>
-                      <p className="text-gray-600 dark:text-gray-400" style={{ fontFamily: '"Poppins", sans-serif' }}>Google</p>
+                      <h3 className="text-sm font-semibold text-gray-900 dark:text-white" style={{ fontFamily: '"Poppins", sans-serif' }}>Google Data Analytics Specialization</h3>
+                      <p className="text-xs text-gray-600 dark:text-gray-400" style={{ fontFamily: '"Poppins", sans-serif' }}>Google</p>
                     </div>
                   </div>
                 </CardContent>
