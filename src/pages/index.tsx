@@ -59,7 +59,7 @@ const useCipherTyping = (targetText: string, shouldStart: boolean) => {
       startTimeRef.current = typeof performance !== 'undefined' ? performance.now() : Date.now();
     }
 
-    const charDurationMs = 120; // time per character
+    const charDurationMs = 250; // time per character
     const tick = () => {
       const now = typeof performance !== 'undefined' ? performance.now() : Date.now();
       const elapsed = now - (startTimeRef.current as number);
@@ -266,6 +266,7 @@ const Portfolio = () => {
   const [showNameInGrid, setShowNameInGrid] = useState(false);
   const bentoSectionRef = useRef<HTMLElement | null>(null);
   const [isDesktop, setIsDesktop] = useState(false);
+  const [heroScale, setHeroScale] = useState(1);
   
   const roles = [
     'AI ENGINEER',
@@ -358,6 +359,17 @@ const Portfolio = () => {
       const progress = (window.scrollY / totalHeight) * 100;
       setScrollProgress(progress);
 
+      const homeEl = document.getElementById('home');
+      if (homeEl) {
+        const rect = homeEl.getBoundingClientRect();
+        const elementCenter = rect.top + rect.height / 2;
+        const viewportCenter = window.innerHeight / 2;
+        const distance = Math.abs(elementCenter - viewportCenter);
+        const maxDistance = window.innerHeight / 2;
+        const scale = Math.max(0.85, 1 - (distance / maxDistance) * 0.15);
+        setHeroScale(scale);
+      }
+
       if (bentoSectionRef.current) {
         const rect = bentoSectionRef.current.getBoundingClientRect();
         const triggerPosition = window.innerHeight * 0.4;
@@ -367,7 +379,7 @@ const Portfolio = () => {
         setShowNameInGrid(shouldShowInGrid);
       }
     };
-
+    handleScroll();
     window.addEventListener('scroll', handleScroll);
     return () => window.removeEventListener('scroll', handleScroll);
   }, [showNameInGrid, isDesktop]);
@@ -873,7 +885,12 @@ const Portfolio = () => {
       </motion.div>
 
       {/* Hero Section */}
-      <section id="home" className="relative overflow-hidden min-h-screen flex items-center justify-center">
+      <motion.section 
+        id="home" 
+        className="relative overflow-hidden min-h-screen flex items-center justify-center"
+        style={{ scale: heroScale, transformOrigin: 'center center' }}
+        transition={{ duration: 0.2, ease: 'easeOut' }}
+      >
         <GridPattern
           squares={[
             [4, 4],
@@ -1124,7 +1141,7 @@ const Portfolio = () => {
             </motion.div>
           </motion.div>
         </div>
-      </section>
+      </motion.section>
 
       {/* Bento Grid Section - Desktop Only */}
       <section ref={(el) => (bentoSectionRef.current = el)} className="hidden lg:block py-12 bg-transparent">
