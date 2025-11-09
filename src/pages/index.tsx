@@ -401,10 +401,7 @@ const Portfolio = () => {
     setIsClient(true);
   }, []);
 
-  // Ensure cipher starts immediately regardless of scroll or greeting state
-  useEffect(() => {
-    setStartCipher(true);
-  }, []);
+  // Start cipher only after greeting finishes (triggered below in greeting effect)
 
   useEffect(() => {
     if (mounted && !hasAnimatedRef.current) {
@@ -431,11 +428,7 @@ const Portfolio = () => {
     }
   }, [mounted]);
 
-  // Fallback: ensure cipher starts regardless of greeting/scroll
-  useEffect(() => {
-    const t = setTimeout(() => setStartCipher(true), 1800);
-    return () => clearTimeout(t);
-  }, []);
+  // No fallback: we want greeting to appear first, then cipher starts from greeting effect
 
   // Role carousel effect
   useEffect(() => {
