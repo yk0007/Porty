@@ -1722,8 +1722,8 @@ const Portfolio = () => {
         </div>
       </section>
 
-      {/* Resume Section - Hidden */}
-      <section id="resume" className="hidden py-10">
+      {/* Resume Section - Mobile Only */}
+      <section id="resume" className="block lg:hidden py-10">
         <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
           <motion.div
             initial={{ opacity: 0, y: 40 }}
